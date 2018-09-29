@@ -1,0 +1,13 @@
+dependencies:
+  jphp-compress-ext:
+    version: 1.0.0
+    info:
+      sha256: ba72dd84476cdffb93912788f29bedfe24f97d6864b8f5b4bea8f4a4d3064288
+      size: 721465
+      repo: http://api.develnext.org
+  jphp-runtime:
+    version: 1.0.7
+    info:
+      sha256: 36ed7baf5e61332446d93c67354e5fa4d159dd71a19443208fbed12ee44cf962
+      size: 1817288
+      repo: http://api.develnext.org

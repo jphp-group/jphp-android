@@ -1,5 +1,5 @@
 name: jphp-android-ext
-version: '2.0'
+version: 2.0.0
 
 deps:
    jphp-runtime: "*"
@@ -10,5 +10,18 @@ plugins:
 gradle:
    repos:
       - "https://maven.google.com/" # google repo
-   deps:
+   providedDeps:
       - "com.google.android:android:4.1.1.4" # android api
+
+config:
+   ignore:
+   - /sandbox/**
+   - /.idea/**
+   - /.gradle/**
+   - /*.iml
+   - /.git/**
+   - /examples/**
+   - /gradle/**
+   - /jars/**
+   - /build/**
+   - /package.hub.yml
