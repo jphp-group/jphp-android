@@ -1,0 +1,14 @@
+name: jppm-android-plugin
+version: 1.0.0
+type: plugin
+
+plugin:
+  list:
+    - Android
+  sources:
+    - src 
+
+
+deps:
+  jphp-compress-ext: '*'
+  jphp-runtime: '*'

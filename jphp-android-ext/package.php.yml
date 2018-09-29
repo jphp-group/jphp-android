@@ -1,0 +1,14 @@
+name: jphp-android-ext
+version: '2.0'
+
+deps:
+   jphp-runtime: "*"
+
+plugins:
+   - Gradle
+
+gradle:
+   repos:
+      - "https://maven.google.com/" # google repo
+   deps:
+      - "com.google.android:android:4.1.1.4" # android api
