@@ -2,8 +2,6 @@ package org.venity.jphp.android;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import org.venity.jphp.android.classes.WrapR;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import org.venity.jphp.android.classes.app.WrapApplication;
-import org.venity.jphp.android.classes.app.WrapBootstrapActivity;
 import org.venity.jphp.android.classes.content.WrapContext;
 import org.venity.jphp.android.classes.view.WrapView;
 import org.venity.jphp.android.classes.widget.WrapButton;
@@ -60,11 +57,10 @@ public class AndroidExtension extends Extension {
 
         // classes
         registerClass(scope, WrapR.class);
-        registerClass(scope, WrapActivity.class);
-        registerClass(scope, WrapBootstrapActivity.class);
         registerWrapperClass(scope, Context.class, WrapContext.class);
         registerWrapperClass(scope, View.class, WrapView.class);
         registerWrapperClass(scope, Application.class, WrapApplication.class);
+        registerWrapperClass(scope, Activity.class, WrapActivity.class);
 
         registerWrapperClass(scope, TextView.class, WrapTextView.class);
         registerWrapperClass(scope, Button.class, WrapButton.class);

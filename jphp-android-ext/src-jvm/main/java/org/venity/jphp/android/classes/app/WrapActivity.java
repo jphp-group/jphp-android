@@ -1,116 +1,69 @@
 package org.venity.jphp.android.classes.app;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
 import org.venity.jphp.android.AndroidExtension;
-import org.venity.jphp.android.AndroidStandaloneLoader;
+import org.venity.jphp.android.classes.content.WrapContext;
+import org.venity.jphp.android.support.JPHPActivity;
 import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
-import php.runtime.exceptions.CriticalException;
-import php.runtime.lang.IObject;
-import php.runtime.memory.ArrayMemory;
 import php.runtime.reflection.ClassEntity;
 
 @Reflection.Name("Activity")
 @Reflection.Namespace(AndroidExtension.APP_NS)
-public class WrapActivity extends Activity implements IObject {
-    private boolean isFinalized = false;
-    private ClassEntity __class__;
-    private ArrayMemory __props__ = new ArrayMemory();
-
-    public WrapActivity() {
-        super();
+public class WrapActivity extends WrapContext {
+    public WrapActivity(Environment env, Activity wrappedObject) {
+        super(env, wrappedObject);
     }
 
     public WrapActivity(Environment env, ClassEntity clazz) {
-        throw new RuntimeException("Unable to create object");
-    }
-
-    @Reflection.Signature
-    public void __construct(Environment env, Memory... args) {
-        // noup
-    }
-
-    @Reflection.Signature
-    public void setContentView(View view) {
-        super.setContentView(view);
-    }
-
-    @Reflection.Signature
-    public void setTitle(String title) {
-        super.setTitle(title);
-    }
-
-    @Reflection.Signature
-    public void onCreate() {
-        // nop.
+        super(env, clazz);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getEnvironment().invokeMethodNoThrow(this, "onCreate");
+    public Activity getWrappedObject() {
+        return (Activity) super.getWrappedObject();
     }
 
-    final protected void onCreateClearly(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    @Reflection.Signature
+    public void __construct()
+    {
+        __wrappedObject = new JPHPActivity();
 
-    @Override
-    public ClassEntity getReflection() {
-        if (__class__ != null) {
-            return __class__;
-        }
+        WrapActivity i = this;
 
-        Environment env = getEnvironment();
-        if (env != null) {
-            try {
-                __class__ = env.fetchClass(getClass().getField("$CL").get(null).toString());
-            } catch (IllegalAccessException e) {
-                throw new CriticalException(e);
-            } catch (NoSuchFieldException e) {
-                throw new CriticalException(e);
+        ((JPHPActivity) __wrappedObject).onCreate = new Runnable() {
+            @Override
+            public void run() {
+                Memory onCreate = getEnvironment().invokeMethodNoThrow(i, "onCreate");
             }
-        }
-
-        return __class__;
+        }; // lol
     }
 
-    @Override
-    public ArrayMemory getProperties() {
-        return __props__;
+    @Reflection.Signature
+    public void setTitle(String title)
+    {
+        getWrappedObject().setTitle(title);
     }
 
-    @Override
-    public Environment getEnvironment() {
-        return AndroidStandaloneLoader.getEnvironment();
+    @Reflection.Signature
+    public void setContentView(View view)
+    {
+        getWrappedObject().setContentView(view);
     }
 
-    @Override
-    public int getPointer() {
-        return hashCode();
+    @Reflection.Signature
+    public View findById(int id)
+    {
+        return getWrappedObject().findViewById(id);
     }
 
-    @Override
-    public boolean isMock() {
-        return __class__ == null;
-    }
-
-    @Override
-    public void setAsMock() {
-        __class__ = null;
-    }
-
-    @Override
-    public boolean isFinalized() {
-        return isFinalized;
-    }
-
-    @Override
-    public void doFinalize() {
-        isFinalized = true;
+    @Reflection.Signature
+    public void showActivity(Activity newActivity)
+    {
+        getWrappedObject().startActivity(new Intent(this.getWrappedObject(), newActivity.getClass()));
     }
 }
