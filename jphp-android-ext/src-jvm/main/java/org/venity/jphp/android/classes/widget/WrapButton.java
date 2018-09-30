@@ -1,5 +1,6 @@
 package org.venity.jphp.android.classes.widget;
 
+import android.app.Activity;
 import android.widget.Button;
 import android.widget.TextView;
 import org.venity.jphp.android.AndroidExtension;
@@ -25,7 +26,7 @@ public class WrapButton extends WrapTextView {
     }
 
     @Reflection.Signature
-    public void __construct(WrapActivity activity) {
+    public void __construct(Activity activity) {
         __wrappedObject = new Button(activity);
         getWrappedObject().setId(idCounter.getAndIncrement());
     }

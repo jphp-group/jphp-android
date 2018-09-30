@@ -1,5 +1,6 @@
 package org.venity.jphp.android.classes.widget;
 
+import android.app.Activity;
 import android.widget.EditText;
 import org.venity.jphp.android.AndroidExtension;
 import org.venity.jphp.android.classes.app.WrapActivity;
@@ -19,7 +20,7 @@ public class WrapEditText extends WrapTextView {
     }
 
     @Reflection.Signature
-    public void __construct(WrapActivity activity) {
+    public void __construct(Activity activity) {
         __wrappedObject = new EditText(activity);
         getWrappedObject().setId(idCounter.getAndIncrement());
     }

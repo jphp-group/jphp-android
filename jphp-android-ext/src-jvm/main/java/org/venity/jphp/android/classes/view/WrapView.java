@@ -1,5 +1,6 @@
 package org.venity.jphp.android.classes.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import org.venity.jphp.android.AndroidExtension;
@@ -26,7 +27,7 @@ public class WrapView extends BaseWrapper<View> {
     }
 
     @Reflection.Signature
-    public void __construct(WrapActivity activity)
+    public void __construct(Activity activity)
     {
         __wrappedObject = new View(activity);
     }
