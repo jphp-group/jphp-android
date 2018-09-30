@@ -3,6 +3,7 @@ package org.venity.jphp.android.classes.app;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import org.venity.jphp.android.AndroidExtension;
 import org.venity.jphp.android.AndroidStandaloneLoader;
 import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
@@ -12,6 +13,8 @@ import php.runtime.lang.IObject;
 import php.runtime.memory.ArrayMemory;
 import php.runtime.reflection.ClassEntity;
 
+@Reflection.Name("Activity")
+@Reflection.Namespace(AndroidExtension.APP_NS)
 public class WrapActivity extends Activity implements IObject {
     private boolean isFinalized = false;
     private ClassEntity __class__;

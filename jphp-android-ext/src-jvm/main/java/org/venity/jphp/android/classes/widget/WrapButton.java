@@ -2,11 +2,14 @@ package org.venity.jphp.android.classes.widget;
 
 import android.widget.Button;
 import android.widget.TextView;
+import org.venity.jphp.android.AndroidExtension;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
 import php.runtime.reflection.ClassEntity;
 
+@Reflection.Name("Button")
+@Reflection.Namespace(AndroidExtension.WIDGET_NS)
 public class WrapButton extends WrapTextView {
     public WrapButton(Environment env, Button wrappedObject) {
         super(env, wrappedObject);
