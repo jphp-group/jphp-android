@@ -6,7 +6,7 @@ import org.venity.jphp.android.AndroidStandaloneLoader;
 import php.runtime.annotation.Reflection;
 
 @Reflection.Name("BootstrapActivity")
-@Reflection.Namespace(AndroidExtension.APP_NS)
+@Reflection.Namespace("php\\android\\app")
 public class WrapBootstrapActivity extends WrapActivity {
 
     @Override
