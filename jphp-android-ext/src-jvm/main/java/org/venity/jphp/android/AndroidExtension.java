@@ -1,9 +1,23 @@
 package org.venity.jphp.android;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import org.venity.jphp.android.classes.WrapR;
+import org.venity.jphp.android.classes.app.WrapActivity;
+import org.venity.jphp.android.classes.app.WrapApplication;
+import org.venity.jphp.android.classes.app.WrapBootstrapActivity;
+import org.venity.jphp.android.classes.content.WrapContext;
+import org.venity.jphp.android.classes.view.WrapView;
+import org.venity.jphp.android.classes.widget.WrapButton;
+import org.venity.jphp.android.classes.widget.WrapEditText;
+import org.venity.jphp.android.classes.widget.WrapTextView;
 import org.venity.jphp.android.events.ClickEventProvider;
 import org.venity.jphp.android.events.EventProvider;
 import org.venity.jphp.android.events.LongClickEventProvider;
@@ -18,6 +32,10 @@ import java.util.Map;
 public class AndroidExtension extends Extension {
 
     public static final String NS = "php\\android";
+    public static final String VIEW_NS = NS + "\\view";
+    public static final String CONTENT_NS = NS + "\\content";
+    public static final String APP_NS = NS + "\\app";
+    public static final String WIDGET_NS = NS + "\\widget";
 
     public final static Map<String, EventProvider> eventProviders = new HashMap<String, EventProvider>();
     
@@ -40,7 +58,17 @@ public class AndroidExtension extends Extension {
     public void onRegister(CompileScope scope) {
         System.out.println("JPHP for android version: " + getVersion());
 
+        // classes
         registerClass(scope, WrapR.class);
+        registerClass(scope, WrapActivity.class);
+        registerClass(scope, WrapBootstrapActivity.class);
+        registerWrapperClass(scope, Context.class, WrapContext.class);
+        registerWrapperClass(scope, View.class, WrapView.class);
+        registerWrapperClass(scope, Application.class, WrapApplication.class);
+
+        registerWrapperClass(scope, TextView.class, WrapTextView.class);
+        registerWrapperClass(scope, Button.class, WrapButton.class);
+        registerWrapperClass(scope, EditText.class, WrapEditText.class);
 
         // events
         registerEventProvider(new ClickEventProvider());
