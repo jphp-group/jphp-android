@@ -42,7 +42,7 @@ class AndroidPlugin
         fs::makeDir("./resources");
 
         // files
-        fs::makeFile("./build.gradle");
+        fs::makeFile("./build.groovy");
         fs::makeFile("./resources/AndroidManifest.xml");
 
         $settings = [
@@ -55,7 +55,7 @@ class AndroidPlugin
             "versionName" => Console::read("versionName :", "1.0"),
         ];
 
-        $script = Stream::getContents("res://android/build.gradle");
+        $script = Stream::getContents("res://android/build.groovy");
         $xml = Stream::getContents("res://android/resources/AndroidManifest.xml");
 
         foreach ($settings as $key => $val)
