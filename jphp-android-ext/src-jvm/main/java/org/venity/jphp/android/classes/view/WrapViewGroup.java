@@ -7,7 +7,6 @@ import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
 import php.runtime.reflection.ClassEntity;
 
-@Reflection.Abstract
 @Reflection.Name("ViewGroup")
 @Reflection.Namespace(AndroidExtension.VIEW_NS)
 public class WrapViewGroup extends WrapView {

@@ -4,19 +4,15 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.*;
 import org.venity.jphp.android.classes.WrapR;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import org.venity.jphp.android.classes.app.WrapApplication;
 import org.venity.jphp.android.classes.content.WrapContext;
 import org.venity.jphp.android.classes.view.WrapView;
-import org.venity.jphp.android.classes.widget.WrapButton;
-import org.venity.jphp.android.classes.widget.WrapEditText;
-import org.venity.jphp.android.classes.widget.WrapTextView;
-import org.venity.jphp.android.classes.widget.WrapToast;
+import org.venity.jphp.android.classes.view.WrapViewGroup;
+import org.venity.jphp.android.classes.widget.*;
 import org.venity.jphp.android.events.*;
 import php.runtime.env.CompileScope;
 import php.runtime.env.Environment;
@@ -59,6 +55,7 @@ public class AndroidExtension extends Extension {
         registerClass(scope, WrapR.class);
         registerWrapperClass(scope, Context.class, WrapContext.class);
         registerWrapperClass(scope, View.class, WrapView.class);
+        registerWrapperClass(scope, ViewGroup.class, WrapViewGroup.class);
         registerWrapperClass(scope, Application.class, WrapApplication.class);
         registerWrapperClass(scope, Activity.class, WrapActivity.class);
 
@@ -66,6 +63,10 @@ public class AndroidExtension extends Extension {
         registerWrapperClass(scope, Button.class, WrapButton.class);
         registerWrapperClass(scope, EditText.class, WrapEditText.class);
         registerWrapperClass(scope, Toast.class, WrapToast.class);
+        registerWrapperClass(scope, CheckBox.class, WrapCheckBox.class);
+
+        registerWrapperClass(scope, GridLayout.class, WrapGridLayout.class);
+        registerWrapperClass(scope, LinearLayout.class, WrapLinearLayout.class);
 
         // events
         registerEventProvider(new ClickEventProvider());
