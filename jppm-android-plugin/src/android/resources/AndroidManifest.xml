@@ -3,10 +3,10 @@
         android:versionCode="1"
         android:versionName="1.0"
         package="org.venity.jphp.android">
-    <application android:label="test">
+    <application android:label="%appName%">
         <activity
                 android:name=".BootstrapActivity"
-                android:label="test">
+                android:label="%appName%">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

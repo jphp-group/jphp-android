@@ -49,18 +49,23 @@ class AndroidPlugin
             "compileSdkVersion" => (int) Console::read("compileSdkVersion :", 28),
             "buildToolsVersion" => Console::read("buildToolsVersion :", "28.0.3"),
             "targetSdkVersion" => (int) Console::read("targetSdkVersion :", 28),
+            "appName" => Console::read("App name :", "test"),
             "applicationId" => Console::read("applicationId :", "org.venity.test"),
             "versionCode" => (int) Console::read("versionCode :", 1),
             "versionName" => Console::read("versionName :", "1.0"),
         ];
 
         $script = Stream::getContents("res://android/build.gradle");
+        $xml = Stream::getContents("res://android/resources/AndroidManifest.xml");
 
         foreach ($settings as $key => $val)
             $script = str::replace($script, "%{$key}%", $val);
 
+        foreach ($settings as $key => $val)
+            $xml = str::replace($xml, "%{$key}%", $val);
+
         Stream::putContents("./build.gradle", $script);
-        Stream::putContents("./resources/AndroidManifest.xml", Stream::getContents("res://android/resources/AndroidManifest.xml"));
+        Stream::putContents("./resources/AndroidManifest.xml", $xml);
 
         Console::log("-> prepare jphp compiler ...");
         fs::makeDir('./.venity/');
@@ -105,7 +110,7 @@ class AndroidPlugin
             exit($exit);
         } else Console::log(" -> done");
 
-        Tasks::cleanDir("/build/out");
+        Tasks::cleanDir("./build/out");
 
         /** @var \php\lang\Process $process */
         $process = (new GradlePlugin($event))->gradleProcess([

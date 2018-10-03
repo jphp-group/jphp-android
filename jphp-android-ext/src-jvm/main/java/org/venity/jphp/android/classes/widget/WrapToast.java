@@ -13,8 +13,8 @@ import php.runtime.reflection.ClassEntity;
 @Reflection.Namespace(AndroidExtension.WIDGET_NS)
 public class WrapToast extends BaseWrapper<Toast> {
 
-    public static int SHORT = 0;
-    public static int LONG  = 1;
+    public static final int SHORT = 0;
+    public static final int LONG  = 1;
 
     public WrapToast(Environment env, Toast wrappedObject) {
         super(env, wrappedObject);
