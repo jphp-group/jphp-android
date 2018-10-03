@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.venity.jphp.android.classes.WrapR;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import org.venity.jphp.android.classes.app.WrapApplication;
@@ -15,9 +16,8 @@ import org.venity.jphp.android.classes.view.WrapView;
 import org.venity.jphp.android.classes.widget.WrapButton;
 import org.venity.jphp.android.classes.widget.WrapEditText;
 import org.venity.jphp.android.classes.widget.WrapTextView;
-import org.venity.jphp.android.events.ClickEventProvider;
-import org.venity.jphp.android.events.EventProvider;
-import org.venity.jphp.android.events.LongClickEventProvider;
+import org.venity.jphp.android.classes.widget.WrapToast;
+import org.venity.jphp.android.events.*;
 import php.runtime.env.CompileScope;
 import php.runtime.env.Environment;
 import php.runtime.ext.support.Extension;
@@ -65,10 +65,15 @@ public class AndroidExtension extends Extension {
         registerWrapperClass(scope, TextView.class, WrapTextView.class);
         registerWrapperClass(scope, Button.class, WrapButton.class);
         registerWrapperClass(scope, EditText.class, WrapEditText.class);
+        registerWrapperClass(scope, Toast.class, WrapToast.class);
 
         // events
         registerEventProvider(new ClickEventProvider());
         registerEventProvider(new LongClickEventProvider());
+        registerEventProvider(new TouchEventProvider());
+        registerEventProvider(new KeyEventProvider());
+        registerEventProvider(new FocusEventProvider());
+        registerEventProvider(new DragEventProvider());
     }
 
     public static void registerEventProvider(EventProvider eventProvider) {
