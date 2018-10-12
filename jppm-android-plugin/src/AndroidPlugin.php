@@ -51,10 +51,12 @@ class AndroidPlugin
 
         $flags = $e->flags();
 
+        $sdk = $flags[4] ?? (int) Console::read("sdkVersion :", 28);
+
         $settings = [
-            "compileSdkVersion" => $flags[6] ?? (int) Console::read("compileSdkVersion :", 28),
-            "buildToolsVersion" => $flags[4] ?? Console::read("buildToolsVersion :", "28.0.3"),
-            "targetSdkVersion" => $flags[5] ?? (int) Console::read("targetSdkVersion :", 28),
+            "compileSdkVersion" => $sdk,
+            "buildToolsVersion" => $flags[5] ?? Console::read("buildToolsVersion :", "28.0.3"),
+            "targetSdkVersion" => $sdk,
             "appName" => $flags[0] ?? Console::read("App name :", "test"),
             "applicationId" => $flags[1] ?? Console::read("applicationId :", "org.venity.test"),
             "versionCode" => $flags[3] ?? (int) Console::read("versionCode :", 1),
