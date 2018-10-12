@@ -49,14 +49,16 @@ class AndroidPlugin
         fs::makeFile("./build.groovy");
         fs::makeFile("./resources/AndroidManifest.xml");
 
+        $flags = $e->flags();
+
         $settings = [
-            "compileSdkVersion" => (int) Console::read("compileSdkVersion :", 28),
-            "buildToolsVersion" => Console::read("buildToolsVersion :", "28.0.3"),
-            "targetSdkVersion" => (int) Console::read("targetSdkVersion :", 28),
-            "appName" => Console::read("App name :", "test"),
-            "applicationId" => Console::read("applicationId :", "org.venity.test"),
-            "versionCode" => (int) Console::read("versionCode :", 1),
-            "versionName" => Console::read("versionName :", "1.0"),
+            "compileSdkVersion" => $flags[6] ?? (int) Console::read("compileSdkVersion :", 28),
+            "buildToolsVersion" => $flags[4] ?? Console::read("buildToolsVersion :", "28.0.3"),
+            "targetSdkVersion" => $flags[5] ?? (int) Console::read("targetSdkVersion :", 28),
+            "appName" => $flags[0] ?? Console::read("App name :", "test"),
+            "applicationId" => $flags[1] ?? Console::read("applicationId :", "org.venity.test"),
+            "versionCode" => $flags[3] ?? (int) Console::read("versionCode :", 1),
+            "versionName" => $flags[2] ?? Console::read("versionName :", "1.0"),
         ];
 
         $script = Stream::getContents("res://android/build.groovy");
