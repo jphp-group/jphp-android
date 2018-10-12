@@ -13,7 +13,8 @@ use php\lib\str;
  * Class AndroidPlugin
  * @jppm-task-prefix android
  * @jppm-task init as init
- * @jppm-task build as build
+ * @jppm-task compile as build
+ * @jppm-task compile as compile
  */
 class AndroidPlugin
 {
@@ -82,7 +83,7 @@ class AndroidPlugin
      * @throws \php\lang\IllegalArgumentException
      * @throws \php\lang\IllegalStateException
      */
-    public function build(Event $event)
+    public function compile(Event $event)
     {
         Console::log("-> compiling jphp ...");
 
@@ -120,12 +121,17 @@ class AndroidPlugin
 
         Tasks::cleanDir("./build/out");
 
+        $gradleTask = $event->flags()[0] ?? "build";
+
         /** @var \php\lang\Process $process */
         $process = (new GradlePlugin($event))->gradleProcess([
-            "build"
+            $gradleTask
         ])->inheritIO()->startAndWait();
 
-        exit($process->getExitValue());
+        $exit = $process->getExitValue();
+
+        if ($exit != 0)
+            exit($exit);
 
         fs::delete("./libs/compile.jar");
     }
