@@ -12,7 +12,6 @@ class R {
     public static function menu(string $name) : int {}
     public static function layout(string $name) : int {}
     public static function integer(string $name) : int {}
-    public static function integer(string $name) : int {}
     public static function fraction(string $name) : int {}
     public static function id(string $name) : int {}
     public static function drawable(string $name) : int {}

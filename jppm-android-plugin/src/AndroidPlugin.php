@@ -9,7 +9,6 @@ use compress\ZipArchive;
 use compress\ZipArchiveEntry;
 use php\lib\str;
 
-
 /**
  * Class AndroidPlugin
  * @jppm-task-prefix android
@@ -18,6 +17,10 @@ use php\lib\str;
  */
 class AndroidPlugin
 {
+    /**
+     * @param Event $e
+     * @throws \php\io\IOException
+     */
     public function init(Event $e)
     {
         if (!isset($packageData['deps']['jphp-android-ext'])) {
@@ -74,6 +77,11 @@ class AndroidPlugin
         Stream::putContents('./.venity/compiler.jar', Stream::getContents("res://jphp/compiler.jar"));
     }
 
+    /**
+     * @param Event $event
+     * @throws \php\lang\IllegalArgumentException
+     * @throws \php\lang\IllegalStateException
+     */
     public function build(Event $event)
     {
         Console::log("-> compiling jphp ...");
