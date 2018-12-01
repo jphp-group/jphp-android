@@ -3,6 +3,5 @@ jdk: oraclejdk8
 sudo: true
 
 script:
-  - "wget -O - https://github.com/jphp-compiler/jphp/releases/download/jppm-0.3.8/jppm-setup-0.3.8.sh | sudo bash"
-  - "cd jphp-android-ext"
-  - "jppm publish --yes"
+  - "wget -O - https://github.com/jphp-compiler/jphp/releases/download/jppm-0.4.0/jppm-setup-0.4.0.sh | sudo bash"
+  - "jppm build"
