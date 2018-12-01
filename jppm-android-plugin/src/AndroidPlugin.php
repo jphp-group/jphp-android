@@ -34,14 +34,6 @@ class AndroidPlugin
         Console::log('-> install gradle ...');
         (new GradlePlugin($e))->install($e);
 
-        Stream::putContents("./gradle/wrapper/gradle-wrapper.properties", str::join([
-            "distributionBase=GRADLE_USER_HOME",
-            "distributionPath=wrapper/dists",
-            "zipStoreBase=GRADLE_USER_HOME",
-            "zipStorePath=wrapper/dists",
-            "distributionUrl=https\://services.gradle.org/distributions/gradle-4.6-bin.zip"
-        ], "\n"));
-
         // dirs
         fs::makeDir("./resources");
 
@@ -116,7 +108,7 @@ class AndroidPlugin
             '--dest', './libs/compile.jar'
         ], './');
 
-        $exit = $process->redirectOutputToInherit()->startAndWait()->getExitValue();
+        $exit = $process->inheritIO()->startAndWait()->getExitValue();
 
         if ($exit != 0) {
             Console::log("[ERROR] Error compiling jphp");

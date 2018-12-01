@@ -3,5 +3,6 @@ version: 1.0.0
 description: Android support for jPHP
 
 modules: # dir and task to build
+  jphp-compiler: "compiler-build"
   jphp-android-ext: "publish"
   jppm-android-plugin: "publish"
