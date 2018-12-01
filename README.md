@@ -11,16 +11,11 @@ This jar file gets into gralde dependencies and gradle build your apk file.
 ## How to install ?
 
 Install the lasted version of [jppm](https://github.com/jphp-group/jphp/releases) and [JDK 8](https://java.com/ru/download/).
-Before install execute this commands:
-
-```bash
-cd ./jphp-android-ext && jppm publish --yes
-cd ../jppm-android-plugin && jppm publish --yes
-```
+Before install execute command ``jppm build``
 
 ## How to start new Android Project ?
 
-Create new directiory and execute commands: 
+Create new directory and execute commands:
 
 ```bash
 jppm init # adding app plugin
@@ -41,7 +36,7 @@ You can find ``apk`` file in ``build\outputs\apk`` dir.
 - resources/             # android resources dir
   \- AndroidManifest.xml # android manifest (see android docs)
 - src/                   # php sources dir
-  \- index.php           # bootsrap php file
+  \- index.php           # bootstrap php file
 - vendor/                # jppm dependencies
   \- ....
 - package.php.yml        # jppm project file
