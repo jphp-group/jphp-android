@@ -12,6 +12,8 @@ gradle:
       - "https://maven.google.com/" # google repo
    providedDeps:
       - "com.google.android:android:4.1.1.4" # android api
+   deps:
+      - "com.squareup.picasso:picasso:2.5.0"
 
 config:
    ignore:
