@@ -39,4 +39,20 @@ class Activity extends Context
     public function findById(int $id) : View {
 
     }
+
+    /**
+     * --RU--
+     * При создании Activity
+     *
+     * --EN--
+     * On Activity create
+     *
+     * --JP--
+     * Activity 作成時
+     *
+     * @param callable $callback
+     */
+    public function setOnCreate(callable $callback) {
+
+    }
 }

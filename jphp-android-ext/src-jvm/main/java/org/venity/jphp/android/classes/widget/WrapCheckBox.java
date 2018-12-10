@@ -1,6 +1,7 @@
 package org.venity.jphp.android.classes.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.widget.CheckBox;
 import org.venity.jphp.android.AndroidExtension;
 import org.venity.jphp.android.classes.view.WrapView;
@@ -25,7 +26,7 @@ public class WrapCheckBox extends WrapView {
     }
 
     @Reflection.Signature
-    public void __construct(Activity activity) {
+    public void __construct(Context activity) {
         __wrappedObject = new CheckBox(activity);
     }
 

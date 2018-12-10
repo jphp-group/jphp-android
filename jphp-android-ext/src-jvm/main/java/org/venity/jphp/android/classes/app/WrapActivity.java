@@ -10,6 +10,7 @@ import org.venity.jphp.android.support.JPHPActivity;
 import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
+import php.runtime.invoke.Invoker;
 import php.runtime.reflection.ClassEntity;
 
 @Reflection.Name("Activity")
@@ -32,15 +33,6 @@ public class WrapActivity extends WrapContext {
     public void __construct()
     {
         __wrappedObject = new JPHPActivity();
-
-        WrapActivity i = this;
-
-        ((JPHPActivity) __wrappedObject).onCreate = new Runnable() {
-            @Override
-            public void run() {
-                Memory onCreate = getEnvironment().invokeMethodNoThrow(i, "onCreate");
-            }
-        }; // lol
     }
 
     @Reflection.Signature
@@ -71,5 +63,19 @@ public class WrapActivity extends WrapContext {
     public void showActivity(Activity newActivity)
     {
         getWrappedObject().startActivity(new Intent(this.getWrappedObject(), newActivity.getClass()));
+    }
+
+    @Reflection.Signature
+    public void setOnCreate(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onCreate = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    invoker.call(Memory.NULL);
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        };
     }
 }

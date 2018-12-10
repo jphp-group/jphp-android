@@ -1,6 +1,7 @@
 package org.venity.jphp.android.support;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 public class JPHPActivity extends Activity {

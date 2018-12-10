@@ -1,6 +1,7 @@
 package org.venity.jphp.android.classes.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 import org.venity.jphp.android.AndroidExtension;
@@ -26,9 +27,8 @@ public class WrapTextView extends WrapView {
         return (TextView) super.getWrappedObject();
     }
 
-    @Override
     @Reflection.Signature
-    public void __construct(Activity activity) {
+    public void __construct(Context activity) {
         __wrappedObject = new TextView(activity);
         getWrappedObject().setId(idCounter.getAndIncrement());
     }

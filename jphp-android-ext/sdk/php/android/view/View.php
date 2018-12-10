@@ -7,7 +7,7 @@ use php\android\app\Activity;
 
 class View
 {
-    public function __construct(Activity $activity)
+    public function __construct(Context $activity)
     {
 
     }

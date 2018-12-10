@@ -1,6 +1,7 @@
 package org.venity.jphp.android.classes.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.GridLayout;
 import org.venity.jphp.android.AndroidExtension;
@@ -21,7 +22,7 @@ public class WrapGridLayout extends WrapViewGroup {
     }
 
     @Reflection.Signature
-    public void __construct(Activity activity) {
+    public void __construct(Context activity) {
         __wrappedObject = new GridLayout(activity);
         getWrappedObject().setId(idCounter.getAndIncrement());
     }
