@@ -129,6 +129,8 @@ public class Main {
             if (jarFile != null) {
                 try {
                     compiler.compileJar(jarFile, destinationDirectory, Main.class.getName());
+                } catch (ZipException e) {
+                    // nup. Bug fix
                 } finally {
                     FsUtils.delete(env, destinationDirectory.getPath());
                 }
@@ -272,7 +274,6 @@ public class Main {
                             if (file.isFile()) {
                                 JarEntry jarEntry = new JarEntry(name);
                                 jarEntry.setTime(file.lastModified());
-
                                 jarOutputStream.putNextEntry(jarEntry);
 
                                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
@@ -297,8 +298,6 @@ public class Main {
                                 jarOutputStream.putNextEntry(jarEntry);
                                 jarOutputStream.closeEntry();
                             }
-                        } catch (ZipException e) {
-                            // noup
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -311,6 +310,8 @@ public class Main {
             }
 
             jarOutputStream.close();
+        } catch (ZipException throwable) {
+            // nop.
         }
     }
 

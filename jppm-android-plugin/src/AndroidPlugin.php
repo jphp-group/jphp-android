@@ -67,10 +67,13 @@ class AndroidPlugin
         Stream::putContents("./build.gradle", $script);
         Stream::putContents("./resources/AndroidManifest.xml", $xml);
 
+        $this->prepare_compiler();
+    }
+
+    public function prepare_compiler() {
         Console::log("-> prepare jphp compiler ...");
         fs::makeDir('./.venity/');
         fs::makeFile('./.venity/compiler.jar');
-
         Stream::putContents('./.venity/compiler.jar', Stream::getContents("res://jphp/compiler.jar"));
     }
 
@@ -81,6 +84,8 @@ class AndroidPlugin
      */
     public function compile(Event $event)
     {
+        $this->prepare_compiler();
+
         Console::log("-> compiling jphp ...");
 
         Tasks::run("app:build");
@@ -91,13 +96,13 @@ class AndroidPlugin
 
         $zip = new ZipArchive($buildFileName);
         $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) {
+            if (str::endsWith(str::upper($entry->name), "META-INF/MANIFEST.MF")) return; // fix #2
+
             if (!$entry->isDirectory()) {
                 fs::makeFile(fs::abs('./build/out/' . $entry->name));
                 fs::copy($stream, fs::abs('./build/out/' . $entry->name));
-                echo '.';
             } else fs::makeDir(fs::abs('./build/out/' . $entry->name));
         });
-        echo ". done\n";
 
         fs::delete($buildFileName);
 
