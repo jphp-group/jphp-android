@@ -8,6 +8,7 @@ use php\lib\fs;
 use compress\ZipArchive;
 use compress\ZipArchiveEntry;
 use php\lib\str;
+use php\lang\System;
 
 /**
  * Class AndroidPlugin
@@ -41,18 +42,16 @@ class AndroidPlugin
         fs::makeFile("./build.groovy");
         fs::makeFile("./resources/AndroidManifest.xml");
 
-        $flags = $e->flags();
-
-        $sdk = $flags[4] ?? (int) Console::read("sdkVersion :", 28);
+        $sdk = $_ENV["android.build.sdk"] ?: Console::read("sdkVersion :", 28);
 
         $settings = [
             "compileSdkVersion" => $sdk,
-            "buildToolsVersion" => $flags[5] ?? Console::read("buildToolsVersion :", "28.0.3"),
+            "buildToolsVersion" => $_ENV["android.build.tools"] ?: Console::read("buildToolsVersion :", "28.0.3"),
             "targetSdkVersion" => $sdk,
-            "appName" => $flags[0] ?? Console::read("App name :", "test"),
-            "applicationId" => $flags[1] ?? Console::read("applicationId :", "org.venity.test"),
-            "versionCode" => $flags[3] ?? (int) Console::read("versionCode :", 1),
-            "versionName" => $flags[2] ?? Console::read("versionName :", "1.0"),
+            "appName" => $_ENV["android.app.name"] ?: Console::read("App name :", "test"),
+            "applicationId" => $_ENV["android.app.id"] ?: Console::read("applicationId :", "org.venity.test"),
+            "versionCode" => $_ENV["android.version.code"] ?: (int) Console::read("versionCode :", 1),
+            "versionName" => $_ENV["android.version.name"] ?: Console::read("versionName :", "1.0"),
         ];
 
         $script = Stream::getContents("res://android/build.groovy");
