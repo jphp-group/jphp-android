@@ -22,6 +22,8 @@ class App
     private $imageIndex = 0;
 
     public function makeUI() {
+	var_dump(Application::getFilesDir()->getAbsolutePath());
+
         $activity = Application::getMainActivity();
         $activity->setTitle("jPHP Sandbox");
 

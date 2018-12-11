@@ -12,6 +12,8 @@ import php.runtime.invoke.Invoker;
 import php.runtime.lang.BaseWrapper;
 import php.runtime.reflection.ClassEntity;
 
+import java.io.File;
+
 @Reflection.Name("Application")
 @Reflection.Namespace(AndroidExtension.APP_NS)
 public class WrapApplication extends BaseWrapper<Application> {
@@ -55,5 +57,10 @@ public class WrapApplication extends BaseWrapper<Application> {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+    }
+
+    @Reflection.Signature
+    public static File getFilesDir() {
+        return getMainActivity().getFilesDir();
     }
 }

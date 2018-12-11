@@ -2,8 +2,8 @@
 
 namespace php\android\app;
 
-
 use php\android\content\Context;
+use php\io\File;
 
 class Application
 {
@@ -35,6 +35,13 @@ class Application
      * @param callable $callback
      */
     public static function setMainActivityHandler(callable $callback) {
+
+    }
+
+    /**
+     * @return File
+     */
+    public static function getFilesDir(): File {
 
     }
 }
