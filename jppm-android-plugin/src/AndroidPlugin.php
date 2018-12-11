@@ -16,6 +16,7 @@ use php\lang\System;
  * @jppm-task init as init
  * @jppm-task compile as build
  * @jppm-task compile as compile
+ * @jppm-task gradle_install as installGradle
  */
 class AndroidPlugin
 {
@@ -32,8 +33,7 @@ class AndroidPlugin
             ]);
         }
 
-        Console::log('-> install gradle ...');
-        (new GradlePlugin($e))->install($e);
+        $this->gradle_install($e);
 
         // dirs
         fs::makeDir("./resources");
@@ -74,6 +74,19 @@ class AndroidPlugin
         fs::makeDir('./.venity/');
         fs::makeFile('./.venity/compiler.jar');
         Stream::putContents('./.venity/compiler.jar', Stream::getContents("res://jphp/compiler.jar"));
+    }
+
+    public function gradle_install(Event $e) {
+        Console::log('-> install gradle ...');
+
+        Tasks::createDir('./gradle/wrapper');
+        Tasks::createFile('./gradlew', str::replace(fs::get('res://gradle/gradlew'), "\r\n", "\n"));
+        Tasks::createFile('./gradlew.bat', fs::get('res://gradle/gradlew.bat'));
+
+        (new \php\io\File('./gradlew'))->setExecutable(true);
+
+        fs::copy('res://gradle/wrapper/gradle-wrapper.jar', './gradle/wrapper/gradle-wrapper.jar');
+        fs::copy('res://gradle/wrapper/gradle-wrapper.properties', './gradle/wrapper/gradle-wrapper.properties');
     }
 
     /**

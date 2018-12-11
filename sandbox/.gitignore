@@ -1,0 +1,10 @@
+/.venity/**
+/.gradle/**
+/gradle/**
+/vendor/**
+/build/**
+/libs/**
+
+/gradlew
+/gradlew.bat
+/package-lock.php.yml

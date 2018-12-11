@@ -1,7 +1,17 @@
-language: java
+language: android
 jdk: oraclejdk8
 sudo: true
+
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-28.0.3
+    - android-28
 
 script:
   - "wget -O - https://github.com/jphp-compiler/jphp/releases/download/jppm-0.4.0/jppm-setup-0.4.0.sh | sudo bash"
   - "jppm build"
+  - "cd sandbox && jppm update"
+  - "jppm android:installGradle"
+  - "jppm android:compile --packageDebug"
