@@ -2,7 +2,13 @@ name: jphp-android
 version: 1.0.0
 description: Android support for jPHP
 
-modules: # dir and task to build
-  jphp-compiler: "compiler-build"
-  jphp-android-ext: "publish"
-  jppm-android-plugin: "publish"
+modules:
+  jphp-compiler:
+    task: "compiler-build"
+    hub:  false
+  jphp-android-ext:
+    task: "publish"
+    hub:  true
+  jppm-android-plugin:
+    task: "publish"
+    hub:  true

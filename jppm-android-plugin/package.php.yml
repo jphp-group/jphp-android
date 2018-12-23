@@ -2,6 +2,9 @@ name: jppm-android-plugin
 version: 2.0.0
 type: plugin
 
+plugins:
+   - Hub
+
 plugin:
   list:
     - Android
