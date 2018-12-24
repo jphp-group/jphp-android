@@ -40,4 +40,27 @@ public class WrapViewGroup extends WrapView {
     {
         getWrappedObject().addView(view, width, height);
     }
+
+    public static final int FOCUS_BEFORE_DESCENDANTS = 131072;
+    public static final int FOCUS_AFTER_DESCENDANTS = 262144;
+    public static final int FOCUS_BLOCK_DESCENDANTS = 393216;
+    public static final int PERSISTENT_NO_CACHE = 0;
+    public static final int PERSISTENT_ANIMATION_CACHE = 1;
+    public static final int PERSISTENT_SCROLLING_CACHE = 2;
+    public static final int PERSISTENT_ALL_CACHES = 3;
+
+    public interface WrappedInterface {
+        @Reflection.Property int descendantFocusability();
+
+        void removeView(View view);
+        void removeViewAt(int index);
+        void removeViews(int start, int count);
+        void removeViewsInLayout(int start, int count);
+        void removeAllViews();
+        void removeAllViewsInLayout();
+
+        int indexOfChild(View child);
+        int getChildCount();
+        View getChildAt(int index);
+    }
 }

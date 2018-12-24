@@ -26,4 +26,19 @@ public class WrapGridLayout extends WrapViewGroup {
         __wrappedObject = new GridLayout(activity);
         getWrappedObject().setId(idCounter.getAndIncrement());
     }
+
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
+    public static final int UNDEFINED = -2147483648;
+    public static final int ALIGN_BOUNDS = 0;
+    public static final int ALIGN_MARGINS = 1;
+
+    public interface WrappedInterface {
+        @Reflection.Property int rowCount();
+        @Reflection.Property int orientation();
+        @Reflection.Property int alignmentMode();
+        @Reflection.Property boolean useDefaultMargins();
+        @Reflection.Property boolean rowOrderPreserved();
+        @Reflection.Property boolean columnOrderPreserved();
+    }
 }

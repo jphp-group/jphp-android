@@ -75,6 +75,7 @@ public class AndroidExtension extends Extension {
 
         registerWrapperClass(scope, GridLayout.class, WrapGridLayout.class);
         registerWrapperClass(scope, LinearLayout.class, WrapLinearLayout.class);
+        registerWrapperClass(scope, FrameLayout.class, WrapFrameLayout.class);
 
         registerWrapperClass(scope, Picasso.class, WrapPicasso.class);
         registerWrapperClass(scope, RequestCreator.class, WrapRequestCreator.class);

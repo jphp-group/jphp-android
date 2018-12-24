@@ -2,8 +2,7 @@
 
 namespace php\android\view;
 
-
-use php\android\app\Activity;
+use php\android\content\Context;
 
 class View
 {
