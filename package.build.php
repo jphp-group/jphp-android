@@ -19,6 +19,6 @@ function task_hubBuild(Event $e)
     	Stream::putContents('./' . $module . "/package.hub.yml",
     		"login: " . $GLOBALS['argv'][2] . "\nauth: " . $GLOBALS['argv'][3]);
     	
-    	Tasks::runExternal('./' . $module, "hub:publish", [], "yes");
+    	Tasks::runExternal('./' . $module, "hub:publish", ["yes"], "yes");
 	}
 }
