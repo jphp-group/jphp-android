@@ -194,6 +194,10 @@ public class WrapView extends BaseWrapper<View> {
         boolean requestFocus();
         boolean requestFocus(int direction);
         boolean requestFocusFromTouch();
+        void setPadding(int left, int top, int right, int bottom);
+        void setBackgroundColor(int color);
+        void setBackgroundResource(int resid);
+        View getRootView();
 
         @Reflection.Property int verticalScrollbarPosition();
         @Reflection.Property CharSequence contentDescription();
@@ -217,5 +221,8 @@ public class WrapView extends BaseWrapper<View> {
         @Reflection.Property boolean filterTouchesWhenObscured();
         @Reflection.Property boolean saveFromParentEnabled();
         @Reflection.Property int importantForAccessibility();
+        @Reflection.Property float alpha();
+        @Reflection.Property boolean selected();
+        @Reflection.Property boolean activated();
     }
 }

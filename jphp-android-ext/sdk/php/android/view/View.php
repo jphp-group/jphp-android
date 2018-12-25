@@ -284,6 +284,37 @@ class View
     }
 
     /**
+      * @param int $left
+      * @param int $top
+      * @param int $right
+      * @param int $bottom
+      */
+    public function setPadding(int $left, int $top, int $right, int $bottom) {
+
+    }
+
+    /**
+     * @param int $color
+     */
+    public function void setBackgroundColor(int $color) {
+
+    }
+
+    /**
+     * @param int $resid
+     */
+    public function void setBackgroundResource(int $resid) {
+
+    }
+
+    /**
+     * @return View
+     */
+    public function void getRootView(): View {
+
+    }
+
+    /**
      * @var int
      */
     public $id;
@@ -422,4 +453,19 @@ class View
      * @var bool
      */
     public $saveFromParentEnabled;
+
+    /**
+     * @var int
+     */
+    public $alpha;
+
+    /**
+     * @var bool
+     */
+    public $selected;
+
+    /**
+     * @var bool
+     */
+    public $activated;
 }
