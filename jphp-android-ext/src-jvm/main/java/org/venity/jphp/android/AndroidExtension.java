@@ -72,6 +72,7 @@ public class AndroidExtension extends Extension {
         registerWrapperClass(scope, Toast.class, WrapToast.class);
         registerWrapperClass(scope, CheckBox.class, WrapCheckBox.class);
         registerWrapperClass(scope, ImageView.class, WrapImageView.class);
+        registerWrapperClass(scope, Switch.class, WrapSwitch.class);
 
         registerWrapperClass(scope, GridLayout.class, WrapGridLayout.class);
         registerWrapperClass(scope, LinearLayout.class, WrapLinearLayout.class);
