@@ -2,15 +2,24 @@ package org.venity.jphp.android.classes.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.DragEvent;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import org.venity.jphp.android.AndroidExtension;
+import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
+import php.runtime.ext.java.JavaException;
 import php.runtime.invoke.Invoker;
+import php.runtime.lang.BaseException;
 import php.runtime.lang.BaseWrapper;
+import php.runtime.lang.spl.exception.RuntimeException;
 import php.runtime.reflection.ClassEntity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Reflection.Name("View")
@@ -90,17 +99,87 @@ public class WrapView extends BaseWrapper<View> {
 
     @Reflection.Signature
     public void on(String event, Invoker callback) {
-        AndroidExtension.bindEvent(__env__, this.getWrappedObject(), event, callback);
+        switch (event.toLowerCase()) {
+            case "click":
+                __wrappedObject.setOnClickListener(view ->
+                        callback.callNoThrow(Memory.wrap(__env__, view)));
+                break;
+            case "touch":
+                __wrappedObject.setOnTouchListener((view, motionEvent) ->
+                        callback.callNoThrow(Memory.wrap(__env__, view)).toBoolean());
+                break;
+            case "long-click":
+                __wrappedObject.setOnLongClickListener(view ->
+                        callback.callNoThrow(Memory.wrap(__env__, view)).toBoolean());
+                break;
+            case "hover":
+                __wrappedObject.setOnHoverListener((view, motionEvent) ->
+                        callback.callNoThrow(Memory.wrap(__env__, view)).toBoolean());
+                break;
+            case "drag":
+                __wrappedObject.setOnDragListener((view, dragEvent) ->
+                        callback.callNoThrow(Memory.wrap(__env__, view)).toBoolean());
+                break;
+            case "key":
+                __wrappedObject.setOnKeyListener((view, i, keyEvent) ->
+                        callback.callNoThrow(Memory.wrap(__env__, view)).toBoolean());
+                break;
+            case "focus":
+                __wrappedObject.setOnFocusChangeListener((view, b) ->
+                        callback.callNoThrow(Memory.wrap(__env__, view), Memory.wrap(__env__, b)));
+                break;
+            default:
+                __env__.exception(new RuntimeException(__env__), "Event " + event.toUpperCase() + " not found!");
+        }
     }
 
     @Reflection.Signature
     public void off(String event) {
-        AndroidExtension.unbindEvent(__env__, this.getWrappedObject(), event);
+        switch (event.toLowerCase()) {
+            case "click":
+                __wrappedObject.setOnClickListener(null);
+                break;
+            case "touch":
+                __wrappedObject.setOnTouchListener(null);
+                break;
+            case "long-click":
+                __wrappedObject.setOnLongClickListener(null);
+                break;
+            case "hover":
+                __wrappedObject.setOnHoverListener(null);
+                break;
+            case "drag":
+                __wrappedObject.setOnDragListener(null);
+                break;
+            case "key":
+                __wrappedObject.setOnKeyListener(null);
+                break;
+            case "focus":
+                __wrappedObject.setOnFocusChangeListener(null);
+                break;
+            default:
+                __env__.exception(new RuntimeException(__env__), "Event " + event.toUpperCase() + " not found!");
+        }
     }
 
     @Reflection.Signature
     public void trigger(String event) {
-        AndroidExtension.triggerEvent(__env__, this.getWrappedObject(), event);
+        switch (event.toLowerCase()) {
+            case "click":
+                __wrappedObject.callOnClick();
+                break;
+
+            case "focus":
+            case "key":
+            case "drag":
+            case "hover":
+            case "touch":
+            case "long-click":
+                // noop.
+                break;
+            default:
+                __env__.exception(new RuntimeException(__env__), "Event " + event.toUpperCase() + " not found!");
+        }
     }
 
     @Reflection.Setter

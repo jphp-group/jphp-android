@@ -17,14 +17,8 @@ import org.venity.jphp.android.classes.picasso.WrapRequestCreator;
 import org.venity.jphp.android.classes.view.WrapView;
 import org.venity.jphp.android.classes.view.WrapViewGroup;
 import org.venity.jphp.android.classes.widget.*;
-import org.venity.jphp.android.events.*;
 import php.runtime.env.CompileScope;
-import php.runtime.env.Environment;
 import php.runtime.ext.support.Extension;
-import php.runtime.invoke.Invoker;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AndroidExtension extends Extension {
 
@@ -36,8 +30,6 @@ public class AndroidExtension extends Extension {
 
     // picasso lib
     public static final String PICASSO_NS = NS + "\\picasso";
-
-    public final static Map<String, EventProvider> eventProviders = new HashMap<String, EventProvider>();
     
     @Override
     public Status getStatus() {
@@ -80,41 +72,5 @@ public class AndroidExtension extends Extension {
 
         registerWrapperClass(scope, Picasso.class, WrapPicasso.class);
         registerWrapperClass(scope, RequestCreator.class, WrapRequestCreator.class);
-
-        // events
-        registerEventProvider(new ClickEventProvider());
-        registerEventProvider(new LongClickEventProvider());
-        registerEventProvider(new TouchEventProvider());
-        registerEventProvider(new KeyEventProvider());
-        registerEventProvider(new FocusEventProvider());
-        registerEventProvider(new DragEventProvider());
-    }
-
-    public static void registerEventProvider(EventProvider eventProvider) {
-        eventProviders.put(eventProvider.getCode().toLowerCase(), eventProvider);
-    }
-
-    public static void bindEvent(Environment env, View view, String event, final Invoker invoker) {
-        EventProvider provider = eventProviders.get(event.toLowerCase());
-
-        if (provider != null) {
-            provider.bind(env, view, invoker);
-        }
-    }
-
-    public static void unbindEvent(Environment env, View view, String event) {
-        EventProvider provider = eventProviders.get(event.toLowerCase());
-
-        if (provider != null) {
-            provider.unbind(env, view);
-        }
-    }
-
-    public static void triggerEvent(Environment env, View view, String event) {
-        EventProvider provider = eventProviders.get(event.toLowerCase());
-
-        if (provider != null) {
-            provider.trigger(env, view);
-        }
     }
 }
