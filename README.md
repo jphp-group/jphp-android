@@ -25,7 +25,7 @@ jppm android:init # init new android project
 ```
 
 ### Building your project
-To build your project use ``jppm android:compile -build`` command.
+To build your project use ``jppm android:compile --packageDebug`` command.
 You can find ``apk`` file in ``build\outputs\apk`` dir.
 
 #### Project tree : 
