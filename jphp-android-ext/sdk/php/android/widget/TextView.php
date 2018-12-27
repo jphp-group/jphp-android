@@ -19,17 +19,7 @@ class TextView extends View
     /**
      * @var int
      */
-    public $textColor;
-
-    /**
-     * @var int
-     */
     public $highlightColor;
-
-    /**
-     * @var int
-     */
-    public $hintTextColor;
 
     /**
      * @var int

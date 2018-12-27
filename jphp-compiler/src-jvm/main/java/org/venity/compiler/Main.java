@@ -5,10 +5,12 @@ import php.runtime.Memory;
 import php.runtime.common.Callback;
 import php.runtime.env.Context;
 import php.runtime.env.Environment;
+import php.runtime.env.SplClassLoader;
 import php.runtime.env.TraceInfo;
 import php.runtime.exceptions.CriticalException;
 import php.runtime.ext.core.classes.WrapClassLoader;
 import php.runtime.ext.core.classes.lib.FsUtils;
+import php.runtime.ext.spl.SPLFunctions;
 import php.runtime.ext.support.Extension;
 import php.runtime.launcher.LaunchException;
 import php.runtime.loader.dump.ModuleDumper;
@@ -32,7 +34,8 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipException;
 
 public class Main {
-    private final Environment env;
+    public static StandaloneLibraryDumper dumper = new StandaloneLibraryDumper();
+    private static Environment env;
     private File sourceDirectory;
 
     private boolean debug = true;
@@ -117,6 +120,8 @@ public class Main {
                         + " -> dest-res: " + destinationResDirectory + "\n"
         );
 
+        env.scope.registerExtension(new CompilerExtension());
+
         try {
             Main compiler = new Main(sourceDirectory, env);
 
@@ -124,13 +129,16 @@ public class Main {
                 FsUtils.clean(env, destinationResDirectory.getPath());
             }
 
+            WrapCompilerClassLoader.setSourceDir(sourceDirectory);
+            WrapCompilerClassLoader.setDestDir(destinationDirectory);
+            WrapCompilerClassLoader.setDestResDir(destinationResDirectory);
+            WrapCompilerClassLoader.setCompiler(compiler);
+
             compiler.compile(destinationDirectory, destinationResDirectory);
 
             if (jarFile != null) {
                 try {
-                    compiler.compileJar(jarFile, destinationDirectory, Main.class.getName());
-                } catch (ZipException e) {
-                    // nup. Bug fix
+                    compiler.compileJar(jarFile, destinationDirectory);
                 } finally {
                     FsUtils.delete(env, destinationDirectory.getPath());
                 }
@@ -138,7 +146,8 @@ public class Main {
 
             System.out.println("\nCompiling is SUCCESSFUL, time = " + (System.currentTimeMillis() - time) + "ms.");
         } catch (Throwable e) {
-            System.err.println("\nCompiling is FAILED, error: " + e.getMessage());
+            System.err.println("\nCompiling is FAILED, error: \n");
+            e.printStackTrace();
             System.exit(3);
         }
     }
@@ -231,7 +240,7 @@ public class Main {
         dumper.save(entity, new File(destinationResDirectory, "/" + entity.getInternalName() + ".dump"));
     }
 
-    private ModuleEntity compileFile(File path, File destinationDirectory, File destinationResDirectory) {
+    public ModuleEntity compileFile(File path, File destinationDirectory, File destinationResDirectory) {
         try {
             ModuleEntity entity = env.getModuleManager().fetchModule(path.getPath());
             saveModuleClasses(entity, destinationDirectory, destinationResDirectory);
@@ -263,7 +272,6 @@ public class Main {
                     ? new JarOutputStream(outputStream, manifest)
                     : new JarOutputStream(outputStream);
 
-            try {
                 scan(destinationDirectory, new Callback<Boolean, File>() {
                     @Override
                     public Boolean call(File file) {
@@ -305,9 +313,6 @@ public class Main {
                         return false;
                     }
                 });
-            } catch (InterruptedException e) {
-                // nop.
-            }
 
             jarOutputStream.close();
         } catch (ZipException throwable) {
@@ -320,13 +325,11 @@ public class Main {
     }
 
     public void compile(File destinationDirectory, File destinationResDirectory) {
-        StandaloneLibraryDumper dumper = new StandaloneLibraryDumper();
-
         if (destinationResDirectory == null) {
             destinationResDirectory = destinationDirectory;
         }
 
-        String classLoader = ReflectionUtils.getClassName(WrapClassLoader.WrapLauncherClassLoader.class);
+        String classLoader = ReflectionUtils.getClassName(WrapCompilerClassLoader.class);
 
         if (classLoader != null && !(classLoader.isEmpty())) {
             ClassEntity classLoaderEntity = env.fetchClass(classLoader);
@@ -381,7 +384,7 @@ public class Main {
                 }
             });
         } catch (InterruptedException e) {
-            // nop.
+
         }
 
         File file = new File(destinationResDirectory, "/JPHP-INF/library.dump");

@@ -296,21 +296,21 @@ class View
     /**
      * @param int $color
      */
-    public function void setBackgroundColor(int $color) {
+    public function setBackgroundColor(int $color) {
 
     }
 
     /**
      * @param int $resid
      */
-    public function void setBackgroundResource(int $resid) {
+    public function setBackgroundResource(int $resid) {
 
     }
 
     /**
      * @return View
      */
-    public function void getRootView(): View {
+    public function getRootView(): View {
 
     }
 

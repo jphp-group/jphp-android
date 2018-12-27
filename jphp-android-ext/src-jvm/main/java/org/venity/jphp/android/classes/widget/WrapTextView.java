@@ -51,9 +51,7 @@ public class WrapTextView extends WrapView {
     }
 
     public interface WrappedInterface {
-        @Reflection.Property int textColor();
         @Reflection.Property int highlightColor();
-        @Reflection.Property int hintTextColor();
         @Reflection.Property int gravity();
         @Reflection.Property int paintFlags();
         @Reflection.Property int minLines();
