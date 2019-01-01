@@ -15,7 +15,7 @@ Before install execute command ``jppm build``
 
 ## How to start new Android Project ?
 
-Install the lasted version of [Android SDK](https://developer.android.com/studio/#command-tools)
+Install the lasted version of [Android SDK](https://developer.android.com/studio/#command-tools).
 Create new directory and execute commands:
 
 ```bash
