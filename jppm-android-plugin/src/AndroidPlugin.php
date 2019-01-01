@@ -1,8 +1,9 @@
 <?php
 
 use packager\{
-    cli\Console, Event, JavaExec, Packager, Vendor
+    cli\Console, Event, JavaExec, Packager, Vendor, Package
 };
+
 use php\io\Stream;
 use php\lib\fs;
 use compress\ZipArchive;
@@ -35,12 +36,17 @@ class AndroidPlugin
 
         $this->gradle_install($e);
 
+        Tasks::cleanDir("./src/");
+
         // dirs
-        fs::makeDir("./resources");
+        fs::makeDir("./src/");
+        fs::makeDir("./src/main/");
+        fs::makeDir("./src/main/jphp");
+        fs::makeDir("./src/main/res");
 
         // files
-        fs::makeFile("./build.groovy");
-        fs::makeFile("./resources/AndroidManifest.xml");
+        fs::makeFile("./build.gradle");
+        fs::makeFile("./src/main/jphp/index.php");
 
         $sdk = $_ENV["android.build.sdk"] ?: Console::read("sdkVersion :", 28);
 
@@ -55,18 +61,35 @@ class AndroidPlugin
         ];
 
         $script = Stream::getContents("res://android/build.groovy");
-        $xml = Stream::getContents("res://android/resources/AndroidManifest.xml");
+
+        Console::log("-> prepare resources ...");
+
+        $zip = new ZipArchive(Stream::of("res://android/res.zip"));
+        $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($settings) {
+            if (!$entry->isDirectory()) {
+                $filePath = fs::abs('./src/main/' . $entry->name);
+                fs::makeFile($filePath);
+                fs::copy($stream, $filePath);
+
+                if (!fs::ext($filePath) == "xml") return;
+
+                foreach ($settings as $key => $val)
+                    Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
+
+            } else fs::makeDir(fs::abs('./src/main/' . $entry->name));
+        });
 
         foreach ($settings as $key => $val)
             $script = str::replace($script, "%{$key}%", $val);
 
-        foreach ($settings as $key => $val)
-            $xml = str::replace($xml, "%{$key}%", $val);
-
         Stream::putContents("./build.gradle", $script);
-        Stream::putContents("./resources/AndroidManifest.xml", $xml);
+        Stream::putContents("./src/main/jphp/index.php", Stream::getContents("res://android/index.php"));
 
         $this->prepare_compiler();
+
+        $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
+        $yaml["sources"] = [ "src/main/jphp" ];
+        fs::formatAs("./" . Package::FILENAME, $yaml, "yaml");
     }
 
     public function prepare_compiler() {
@@ -127,10 +150,8 @@ class AndroidPlugin
 
         $exit = $process->inheritIO()->startAndWait()->getExitValue();
 
-        if ($exit != 0) {
-            Console::log("[ERROR] Error compiling jphp");
-            exit($exit);
-        } else Console::log(" -> done");
+        if ($exit != 0) exit($exit);
+        else Console::log(" -> done");
 
         Tasks::cleanDir("./build/out");
 

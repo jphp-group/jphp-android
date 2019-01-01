@@ -15,13 +15,14 @@ Before install execute command ``jppm build``
 
 ## How to start new Android Project ?
 
+Install the lasted version of [Android SDK](https://developer.android.com/studio/#command-tools)
 Create new directory and execute commands:
 
 ```bash
-jppm init # adding app plugin
-jppm remove jphp-core && jppm remove jphp-zend-ext # remove not working dependencies
-jppm add jppm-android-plugin --dev # add android plugin
-jppm android:init # init new android project
+jppm init                                                # adding app plugin
+jppm remove jphp-core && jppm remove jphp-zend-ext       # remove not working dependencies
+jppm add jppm-android-plugin --dev                       # add android plugin
+jppm android:init                                        # init new android project
 ```
 
 ### Building your project
@@ -32,15 +33,18 @@ You can find ``apk`` file in ``build\outputs\apk`` dir.
 
 ```
 - .venity/
-  \- compiler.jar        # jphp compiler
-- resources/             # android resources dir
-  \- AndroidManifest.xml # android manifest (see android docs)
-- src/                   # php sources dir
-  \- index.php           # bootstrap php file
-- vendor/                # jppm dependencies
-  \- ....
-- package.php.yml        # jppm project file
-- build.gradle           # gradle build script
+  - compiler.jar            # jphp compiler
+- src/                   
+  - main/                   # sources dir
+     - jphp/                # php sources dir
+        - index.php         # bootstrap php file
+     - res/
+        - ...           
+     - AndroidManifest.xml  # android manifest (see android docs)
+- vendor/                   # jppm dependencies
+  - ....
+- package.php.yml           # jppm project file
+- build.gradle              # gradle build script
 - gradlew
-- gradlew.bat            # gradle starters
+- gradlew.bat               # gradle starters
 ```

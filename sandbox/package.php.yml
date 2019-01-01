@@ -1,16 +1,7 @@
-name: android-sandbox
+name: sandbox
 version: 1.0.0
-description: Sandbox for JPFA
-
-deps:
-   jphp-runtime: "*"
-   jphp-android-ext: "*"
-
-devDeps:
-   jppm-android-plugin: "*" 
-
-plugins:
-   - App
-
-sources:
-   - src
+plugins: [App]
+sources: [src/main/jphp]
+includes: [index.php]
+devDeps: {jppm-android-plugin: '*'}
+deps: {jphp-android-ext: '*'}

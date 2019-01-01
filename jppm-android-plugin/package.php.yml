@@ -1,5 +1,5 @@
 name: jppm-android-plugin
-version: 2.0.0
+version: 2.1.0
 type: plugin
 
 plugins:
@@ -9,7 +9,8 @@ plugin:
   list:
     - Android
   sources:
-    - src 
+    - src
+
 deps:
   jphp-compress-ext: '*'
   jphp-runtime: '*'

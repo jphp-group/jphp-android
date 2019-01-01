@@ -8,10 +8,16 @@
         <uses-permission android:name="android.permission.INTERNET" />
         <!-- For more see https://developer.android.com/guide/topics/permissions/overview -->
 
-    <application android:label="sandbox-android">
+    <application 
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity
                 android:name=".BootstrapActivity"
-                android:label="sandbox-android">  <!-- DONT CHANGE android:name -->
+                android:label="@string/app_name">  <!-- DONT CHANGE android:name -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
