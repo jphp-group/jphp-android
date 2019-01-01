@@ -71,7 +71,7 @@ class AndroidPlugin
                 fs::makeFile($filePath);
                 fs::copy($stream, $filePath);
 
-                if (!fs::ext($filePath) == "xml") return;
+                if (fs::ext($filePath) != "xml") return;
 
                 foreach ($settings as $key => $val)
                     Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
