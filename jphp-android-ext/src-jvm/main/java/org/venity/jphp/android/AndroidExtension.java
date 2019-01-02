@@ -2,6 +2,7 @@ package org.venity.jphp.android;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import org.venity.jphp.android.classes.WrapR;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import org.venity.jphp.android.classes.app.WrapApplication;
 import org.venity.jphp.android.classes.content.WrapContext;
+import org.venity.jphp.android.classes.notification.WrapNotification;
+import org.venity.jphp.android.classes.notification.WrapNotificationBuilder;
 import org.venity.jphp.android.classes.picasso.WrapPicasso;
 import org.venity.jphp.android.classes.picasso.WrapRequestCreator;
 import org.venity.jphp.android.classes.view.WrapView;
@@ -27,6 +30,7 @@ public class AndroidExtension extends Extension {
     public static final String CONTENT_NS = NS + "\\content";
     public static final String APP_NS = NS + "\\app";
     public static final String WIDGET_NS = NS + "\\widget";
+    public static final String NOTIFICATION_NS = NS + "\\notification";
 
     // picasso lib
     public static final String PICASSO_NS = NS + "\\picasso";
@@ -38,17 +42,17 @@ public class AndroidExtension extends Extension {
 
     @Override
     public String getName() {
-        return "JPHP for Android";
+        return "jPHP for Android";
     }
 
     @Override
     public String getVersion() {
-        return "2.0 " + getStatus().toString();
+        return "2.1.0 " + getStatus().toString();
     }
 
     @Override
     public void onRegister(CompileScope scope) {
-        System.out.println("JPHP for android version: " + getVersion());
+        System.out.println("jPHP for android version: " + getVersion());
 
         // classes
         registerClass(scope, WrapR.class);
@@ -72,5 +76,8 @@ public class AndroidExtension extends Extension {
 
         registerWrapperClass(scope, Picasso.class, WrapPicasso.class);
         registerWrapperClass(scope, RequestCreator.class, WrapRequestCreator.class);
+
+        registerWrapperClass(scope, Notification.class, WrapNotification.class);
+        registerWrapperClass(scope, Notification.Builder.class, WrapNotificationBuilder.class);
     }
 }
