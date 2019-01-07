@@ -7,7 +7,11 @@ use php\io\Stream;
 function task_build(Event $e)
 {
     foreach ($e->package()->getAny("modules") as $module => $options)
-    	Tasks::runExternal('./' . $module, $options["task"], [], "yes");
+    {
+        if ($options["doc"]) Tasks::runExternal('./' . $module, "doc:build", [], "yes");
+
+        Tasks::runExternal('./' . $module, $options["task"], [], "yes");
+    }
 }
 
 function task_hubBuild(Event $e)

@@ -5,10 +5,11 @@ description: Android support for jPHP
 modules:
   jphp-compiler:
     task: "compiler-build"
-    hub:  false
+    hub: false
   jphp-android-ext:
     task: "publish"
-    hub:  true
+    hub: true
+    doc: true
   jppm-android-plugin:
     task: "publish"
-    hub:  true
+    hub: true
