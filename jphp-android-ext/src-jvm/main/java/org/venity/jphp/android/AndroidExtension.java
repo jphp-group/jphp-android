@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import org.venity.jphp.android.classes.WrapKeyCodes;
 import org.venity.jphp.android.classes.WrapR;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import org.venity.jphp.android.classes.app.WrapApplication;
@@ -47,7 +48,7 @@ public class AndroidExtension extends Extension {
 
     @Override
     public String getVersion() {
-        return "2.1.0 " + getStatus().toString();
+        return "2.2.0 " + getStatus().toString();
     }
 
     @Override
@@ -55,7 +56,8 @@ public class AndroidExtension extends Extension {
         System.out.println("jPHP for android version: " + getVersion());
 
         // classes
-        registerClass(scope, WrapR.class);
+        registerClass(scope, WrapR.class, WrapKeyCodes.class);
+
         registerWrapperClass(scope, Context.class, WrapContext.class);
         registerWrapperClass(scope, View.class, WrapView.class);
         registerWrapperClass(scope, ViewGroup.class, WrapViewGroup.class);

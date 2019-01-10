@@ -7,25 +7,20 @@
 
 #### Methods
 
-- `->`[`onCreate()`](#method-oncreate)
 - `->`[`setTitle()`](#method-settitle)
 - `->`[`setContentView()`](#method-setcontentview)
 - `->`[`setContentViewById()`](#method-setcontentviewbyid)
 - `->`[`findById()`](#method-findbyid)
 - `->`[`setOnCreate()`](#method-setoncreate) - _On Activity create_
+- `->`[`setOnKeyDown()`](#method-setonkeydown) - _Callback params: int $keyCode_
+- `->`[`setOnKeyUp()`](#method-setonkeyup) - _Callback params: int $keyCode_
+- `->`[`setOnKeyLongPress()`](#method-setonkeylongpress) - _Callback params: int $keyCode_
+- `->`[`setOnKeyMultiple()`](#method-setonkeymultiple) - _Callback params: int $keyCode_
+- `->`[`setOnKeyShortcut()`](#method-setonkeyshortcut) - _Callback params: int $keyCode_
 - See also in the parent class [Context](classes/php/android/content/Context.md)
 
 ---
 # Methods
-
-<a name="method-oncreate"></a>
-
-### onCreate()
-```php
-onCreate(): void
-```
-
----
 
 <a name="method-settitle"></a>
 
@@ -70,3 +65,54 @@ findById(int $id): php\android\view\View
 setOnCreate(callable $callback): void
 ```
 On Activity create
+
+
+---
+
+<a name="method-setonkeydown"></a>
+
+### setOnKeyDown()
+```php
+setOnKeyDown(callable $callback): void
+```
+Callback params: int $keyCode
+
+---
+
+<a name="method-setonkeyup"></a>
+
+### setOnKeyUp()
+```php
+setOnKeyUp(callable $callback): void
+```
+Callback params: int $keyCode
+
+---
+
+<a name="method-setonkeylongpress"></a>
+
+### setOnKeyLongPress()
+```php
+setOnKeyLongPress(callable $callback): void
+```
+Callback params: int $keyCode
+
+---
+
+<a name="method-setonkeymultiple"></a>
+
+### setOnKeyMultiple()
+```php
+setOnKeyMultiple(callable $callback): void
+```
+Callback params: int $keyCode
+
+---
+
+<a name="method-setonkeyshortcut"></a>
+
+### setOnKeyShortcut()
+```php
+setOnKeyShortcut(callable $callback): void
+```
+Callback params: int $keyCode

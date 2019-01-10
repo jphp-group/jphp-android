@@ -11,6 +11,7 @@ import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
 import php.runtime.invoke.Invoker;
+import php.runtime.memory.LongMemory;
 import php.runtime.reflection.ClassEntity;
 
 @Reflection.Name("Activity")
@@ -60,22 +61,37 @@ public class WrapActivity extends WrapContext {
     }
 
     @Reflection.Signature
-    public void showActivity(Activity newActivity)
-    {
-        getWrappedObject().startActivity(new Intent(this.getWrappedObject(), newActivity.getClass()));
+    public void setOnCreate(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onCreate = () -> invoker.callNoThrow(Memory.NULL);
     }
 
     @Reflection.Signature
-    public void setOnCreate(Invoker invoker) {
-        ((JPHPActivity) __wrappedObject).onCreate = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    invoker.call(Memory.NULL);
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }
-        };
+    public void setOnKeyDown(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onKeyDown =
+                keyCode -> invoker.callNoThrow(new LongMemory((long) keyCode)).toBoolean();
+    }
+
+    @Reflection.Signature
+    public void setOnKeyUp(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onKeyUp =
+                keyCode -> invoker.callNoThrow(new LongMemory((long) keyCode)).toBoolean();
+    }
+
+    @Reflection.Signature
+    public void setOnKeyLongPress(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onKeyLongPress =
+                keyCode -> invoker.callNoThrow(new LongMemory((long) keyCode)).toBoolean();
+    }
+
+    @Reflection.Signature
+    public void setOnKeyMultiple(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onKeyMultiple =
+                keyCode -> invoker.callNoThrow(new LongMemory((long) keyCode)).toBoolean();
+    }
+
+    @Reflection.Signature
+    public void setOnKeyShortcut(Invoker invoker) {
+        ((JPHPActivity) __wrappedObject).onKeyShortcut =
+                keyCode -> invoker.callNoThrow(new LongMemory((long) keyCode)).toBoolean();
     }
 }

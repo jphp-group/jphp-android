@@ -5,7 +5,7 @@
 
 **Child Classes**
 
-> [GridLayout](classes/php/android/widget/GridLayout.md), [FrameLayout](classes/php/android/widget/FrameLayout.md), [LinearLayout](classes/php/android/widget/LinearLayout.md)
+> [GridLayout](classes/php/android/widget/GridLayout.md), [LinearLayout](classes/php/android/widget/LinearLayout.md), [FrameLayout](classes/php/android/widget/FrameLayout.md)
 
 ---
 

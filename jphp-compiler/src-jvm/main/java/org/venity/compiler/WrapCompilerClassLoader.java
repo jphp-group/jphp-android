@@ -39,20 +39,22 @@ public class WrapCompilerClassLoader extends WrapClassLoader.WrapLauncherClassLo
     public boolean loadClass(Environment env, String className) throws Throwable {
         if (!super.loadClass(env, className)) {
             File php = new File(sourceDir, className.replace("\\", "/") + ".php");
+            File phb = new File(sourceDir, className.replace("\\", "/") + ".phb");
 
-            if (php.exists()) {
-                System.out.println("---> compile: " + php);
-
-                if (destResDir != null)
-                    Main.dumper.addModule(compiler.compileFile(php, destDir, destResDir));
-                else Main.dumper.addModule(compiler.compileFile(php, destDir, destDir));
-
-                return true;
-            }
-
-            return false;
+            if (php.exists())
+                compile(php);
+            else if (phb.exists())
+                compile(phb);
+            else return false;
         }
 
         return true;
+    }
+
+    private void compile(File file) {
+        System.out.println("---> compile: " + file);
+
+        if (destResDir != null) Main.dumper.addModule(compiler.compileFile(file, destDir, destResDir));
+        else Main.dumper.addModule(compiler.compileFile(file, destDir, destDir));
     }
 }

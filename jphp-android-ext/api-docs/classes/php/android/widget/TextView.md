@@ -5,7 +5,7 @@
 
 **Child Classes**
 
-> [Button](classes/php/android/widget/Button.md), [EditText](classes/php/android/widget/EditText.md)
+> [EditText](classes/php/android/widget/EditText.md), [Button](classes/php/android/widget/Button.md)
 
 ---
 

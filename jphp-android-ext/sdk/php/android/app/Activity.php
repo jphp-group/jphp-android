@@ -7,10 +7,6 @@ use php\android\view\View;
 
 class Activity extends Context
 {
-    public function onCreate() {
-        // stub
-    }
-
     /**
      * @param string $title
      */
@@ -53,6 +49,51 @@ class Activity extends Context
      * @param callable $callback
      */
     public function setOnCreate(callable $callback) {
+
+    }
+
+    /**
+     * Callback params: int $keyCode
+     *
+     * @param callable $callback
+     */
+    public function setOnKeyDown(callable $callback) {
+
+    }
+
+    /**
+     * Callback params: int $keyCode
+     *
+     * @param callable $callback
+     */
+    public function setOnKeyUp(callable $callback) {
+
+    }
+
+    /**
+     * Callback params: int $keyCode
+     *
+     * @param callable $callback
+     */
+    public function setOnKeyLongPress(callable $callback) {
+
+    }
+
+    /**
+     * Callback params: int $keyCode
+     *
+     * @param callable $callback
+     */
+    public function setOnKeyMultiple(callable $callback) {
+
+    }
+
+    /**
+     * Callback params: int $keyCode
+     *
+     * @param callable $callback
+     */
+    public function setOnKeyShortcut(callable $callback) {
 
     }
 }
