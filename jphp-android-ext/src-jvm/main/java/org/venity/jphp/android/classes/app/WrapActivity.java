@@ -43,6 +43,12 @@ public class WrapActivity extends WrapContext {
     }
 
     @Reflection.Signature
+    public void setTitleById(int id)
+    {
+        getWrappedObject().setTitle(id);
+    }
+
+    @Reflection.Signature
     public void setContentView(View view)
     {
         getWrappedObject().setContentView(view);

@@ -43,6 +43,7 @@ jppm add jphp-android-ext@2.1.1
 
 #### `php\android\app`
 
+- [`Dialog`](classes/php/android/app/Dialog.md)
 - [`Activity`](classes/php/android/app/Activity.md)
 - [`Application`](classes/php/android/app/Application.md)
 

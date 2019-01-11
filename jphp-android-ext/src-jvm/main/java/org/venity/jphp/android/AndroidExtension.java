@@ -2,6 +2,7 @@ package org.venity.jphp.android;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
 import android.app.Notification;
 import android.content.Context;
 import android.view.View;
@@ -13,6 +14,7 @@ import org.venity.jphp.android.classes.WrapKeyCodes;
 import org.venity.jphp.android.classes.WrapR;
 import org.venity.jphp.android.classes.app.WrapActivity;
 import org.venity.jphp.android.classes.app.WrapApplication;
+import org.venity.jphp.android.classes.app.WrapDialog;
 import org.venity.jphp.android.classes.content.WrapContext;
 import org.venity.jphp.android.classes.notification.WrapNotification;
 import org.venity.jphp.android.classes.notification.WrapNotificationBuilder;
@@ -63,6 +65,7 @@ public class AndroidExtension extends Extension {
         registerWrapperClass(scope, ViewGroup.class, WrapViewGroup.class);
         registerWrapperClass(scope, Application.class, WrapApplication.class);
         registerWrapperClass(scope, Activity.class, WrapActivity.class);
+        registerWrapperClass(scope, Dialog.class, WrapDialog.class);
 
         registerWrapperClass(scope, TextView.class, WrapTextView.class);
         registerWrapperClass(scope, Button.class, WrapButton.class);
