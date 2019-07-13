@@ -1,0 +1,15 @@
+name: jphp-compiler
+version: 1.0.1
+description: Compiler jPHP to JVM Byte-Code
+
+deps:
+  jphp-core: "*"
+
+plugins:
+  - Gradle
+  - App
+
+app:
+  main-class: 'org.venity.compiler.Main'
+  build:
+     file-name: 'compiler'
