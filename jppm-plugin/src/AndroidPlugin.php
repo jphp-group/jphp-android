@@ -21,6 +21,8 @@ class AndroidPlugin {
     // paths
     public const JPHP_COMPILER_PATH = "./.jpfa/compiler.jar";
     public const JPHP_COMPILER_RESOURCE = "res://jpfa/jphp-compiler.jar";
+    public const JPHP_BUILD_TEMPLATE_JAVAFX = "res://gradle-build-scripts/javafx.template.groovy";
+    public const JPHP_BUILD_TEMPLATE_NATIVE = "res://gradle-build-scripts/native.template.groovy";
     public const GRADLE_WRAPPER_DIR = "./gradle/wrapper";
     public const GRADLE_WRAPPER_JAR_FILE = "./gradle/wrapper/gradle-wrapper.jar";
     public const GRADLE_WRAPPER_JAR_RESOURCE = "res://gradle/wrapper/gradle-wrapper.jar";
@@ -78,12 +80,16 @@ class AndroidPlugin {
 
     public function compile(Event $event) {
         $this->check_environment();
+        $this->gradle_init();
         $this->prepare_compiler();
+        $this->generate_gradle_build($event);
+
+
     }
 
     protected function prepare_compiler() {
         if (!fs::exists(AndroidPlugin::JPHP_COMPILER_PATH)) {
-            Console::log("-> Prepare jPHP compiler ...");
+            Console::log("-> prepare jPHP compiler ...");
 
             fs::move(AndroidPlugin::JPHP_COMPILER_PATH, AndroidPlugin::JPHP_COMPILER_RESOURCE);
         }
@@ -110,5 +116,18 @@ class AndroidPlugin {
 
         fs::copy(AndroidPlugin::GRADLE_WRAPPER_JAR_RESOURCE, AndroidPlugin::GRADLE_WRAPPER_JAR_FILE);
         fs::copy(AndroidPlugin::GRADLE_WRAPPER_PROP_RESOURCE, AndroidPlugin::GRADLE_WRAPPER_PROP_FILE);
+    }
+
+    protected function generate_gradle_build(Event $event) {
+        Console::log('-> prepare build.gradle ...');
+
+        fs::move($event->package()->getAny('android.ui', "javafx") == "javafx" ?
+            AndroidPlugin::JPHP_BUILD_TEMPLATE_JAVAFX : AndroidPlugin::JPHP_BUILD_TEMPLATE_NATIVE, "./build.gradle");
+
+        $template = fs::get("./build.gradle");
+        foreach ($event->package()->getAny('android', []) as $key => $value)
+            $template = str::replace($template, $key, $value);
+
+        Stream::putContents("./build.gradle", $template);
     }
 }
