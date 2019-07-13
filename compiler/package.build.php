@@ -10,4 +10,5 @@ use php\lib\fs;
  */
 function task_compiler_build(Event $e) {
     Tasks::run("build", [], null);
+    fs::move("./build/jphp-compiler.jar", "../jppm-plugin/src/jpfa/jphp-compiler.jar");
 }

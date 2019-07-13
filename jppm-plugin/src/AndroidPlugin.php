@@ -1,6 +1,7 @@
 <?php
 
 use packager\Event;
+use packager\Package;
 use packager\cli\Console;
 use php\io\File;
 use php\io\IOException;
@@ -46,6 +47,7 @@ class AndroidPlugin {
      */
     public function init(Event $event) {
         $this->check_environment();
+        $this->gradle_init();
         $this->prepare_compiler();
 
         // build config
@@ -63,6 +65,15 @@ class AndroidPlugin {
         $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
         $yaml["android"] = $config;
         fs::formatAs("./" . Package::FILENAME, $yaml, "yaml");
+
+        if ($config["ui"] == "javafx") {
+            Tasks::run("add", [ "jphp-android-javafx-ui-ext" ], null);
+        } elseif ($config["ui"] == "native") {
+            Tasks::run("add", [ "jphp-android-native-ui-ext" ], null);
+        } else {
+            Console::error("Unsupported UI type " . $config["ui"] . ", supported UIs: [javafx, native]");
+            exit(102);
+        }
     }
 
     public function compile(Event $event) {
@@ -74,16 +85,7 @@ class AndroidPlugin {
         if (!fs::exists(AndroidPlugin::JPHP_COMPILER_PATH)) {
             Console::log("-> Prepare jPHP compiler ...");
 
-            try {
-                Stream::tryAccess(AndroidPlugin::JPHP_COMPILER_RESOURCE, function () {
-                    Stream::putContents(AndroidPlugin::JPHP_COMPILER_PATH,
-                        Stream::getContents(AndroidPlugin::JPHP_COMPILER_RESOURCE));
-                });
-            } catch (IOException $exception) {
-                Console::error("jPHP compiler not found in resources, try recompile jppm plugin");
-                exit(102);
-            }
-
+            fs::move(AndroidPlugin::JPHP_COMPILER_PATH, AndroidPlugin::JPHP_COMPILER_RESOURCE);
         }
     }
 
@@ -94,7 +96,7 @@ class AndroidPlugin {
         }
     }
 
-    protected function gardle_init() {
+    protected function gradle_init() {
         Console::log('-> install gradle ...');
 
         Tasks::createDir(AndroidPlugin::GRADLE_WRAPPER_DIR);

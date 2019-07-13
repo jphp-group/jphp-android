@@ -12,4 +12,4 @@ plugins:
 app:
   main-class: 'org.venity.compiler.Main'
   build:
-     file-name: 'compiler'
+     file-name: 'jphp-compiler'
