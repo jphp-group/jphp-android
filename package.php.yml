@@ -1,0 +1,9 @@
+name: jphp-android
+version: 1.0.0
+description: Tools and libraries for development android applications
+
+modules:
+  - compiler    # AOT compiler for jphp
+  - ui-native   # wrapper around native android api (experimental)
+  - ui-javafx   # wrapper around javafx-ports
+  - jppm-plugin # plugin for jppm
