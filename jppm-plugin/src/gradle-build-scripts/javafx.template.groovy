@@ -1,10 +1,17 @@
 buildscript {
     repositories {
+        maven {
+            name 'gulon'
+            url  "http://nexus.gluonhq.com/nexus/content/repositories/releases/"
+        }
+
+        mavenLocal()
         jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'org.javafxports:jfxmobile-plugin:2.0.8'
+        classpath 'org.javafxports:jfxmobile-plugin:1.3.10'
     }
 }
 
@@ -13,11 +20,12 @@ apply plugin: 'org.javafxports.jfxmobile'
 repositories {
     maven {
         name 'gulon'
-        url  "http://nexus.gluonhq.com/nexus/content/repositories/releases/" // gluon repository
+        url  "http://nexus.gluonhq.com/nexus/content/repositories/releases/"
     }
+
     mavenLocal()
     jcenter()
-
+    google()
 }
 
 dependencies {

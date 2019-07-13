@@ -6,8 +6,11 @@ use packager\cli\Console;
 use php\io\File;
 use php\io\IOException;
 use php\io\Stream;
+use php\lang\Process;
 use php\lib\fs;
 use php\lib\str;
+use compress\ZipArchive;
+use compress\ZipArchiveEntry;
 
 /**
  * Class AndroidPlugin
@@ -15,6 +18,7 @@ use php\lib\str;
  * @jppm-task-prefix android
  * @jppm-task init as init
  * @jppm-task compile as compile
+ * @jppm-task run as run
  */
 class AndroidPlugin {
 
@@ -78,20 +82,104 @@ class AndroidPlugin {
         }
     }
 
-    public function compile(Event $event) {
+    /**
+     * @param Event $event
+     * @param string $task
+     *
+     * @throws \php\lang\IllegalArgumentException
+     * @throws \php\lang\IllegalStateException
+     */
+    public function exec_gradle_task(Event $event, string $task) {
         $this->check_environment();
         $this->gradle_init();
         $this->prepare_compiler();
         $this->generate_gradle_build($event);
 
+        Tasks::run("build", [], null);
 
+        $buildFileName = "{$event->package()->getName()}-{$event->package()->getVersion('last')}";
+        Console::log('-> unpack jar');
+        fs::makeDir('./build/out');
+
+        $zip = new ZipArchive(fs::abs('./build/' . $buildFileName . '.jar'));
+        $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) {
+            if (!$entry->isDirectory()) {
+                fs::makeFile(fs::abs('./build/out/' . $entry->name));
+                fs::copy($stream, fs::abs('./build/out/' . $entry->name));
+                echo '.';
+            } else fs::makeDir(fs::abs('./build/out/' . $entry->name));
+        });
+        echo ". done\n";
+
+        Console::log('-> starting compiler ...');
+
+        $process = new Process([
+            'java', '-jar', AndroidPlugin::JPHP_COMPILER_PATH,
+            '--src', './build/out',
+            '--dest', './libs/compile.jar'
+        ], './');
+
+        $exit = $process->inheritIO()->startAndWait()->getExitValue();
+
+        if ($exit != 0) {
+            Console::log("[ERROR] Error compiling jPHP");
+            exit($exit);
+        } else Console::log(" -> done");
+
+        Console::log('-> starting gradle ...');
+
+        /** @var Process $process */
+        $process = (new GradlePlugin($event))->gradleProcess([
+            $task
+        ])->inheritIO()->startAndWait();
+
+        exit($process->getExitValue());
+    }
+
+    /**
+     * Compile project
+     *
+     * @param Event $event
+     * @throws \php\lang\IllegalArgumentException
+     * @throws \php\lang\IllegalStateException
+     */
+    public function compile(Event $event) {
+        if ($event->package()->getAny('android.ui', "") == "javafx")
+            $this->exec_gradle_task($event, "android");
+        elseif ($event->package()->getAny('android.ui', "") == "native")
+            $this->exec_gradle_task($event, "packageDebug");
+        else {
+            Console::error("Unable to compile unknown UI type");
+            exit(103);
+        }
+    }
+
+    /**
+     * Run project on desktop
+     *
+     * @param Event $event
+     * @throws \php\lang\IllegalArgumentException
+     * @throws \php\lang\IllegalStateException
+     */
+    public function run(Event $event) {
+        if ($event->package()->getAny('android.ui', "") == "javafx")
+            $this->exec_gradle_task($event, "run");
+        elseif ($event->package()->getAny('android.ui', "") == "native")
+            // Soon ...
+            Console::error("Running native UI type is soon ...");
+        else {
+            Console::error("Unable to run unknown UI type");
+            exit(103);
+        }
     }
 
     protected function prepare_compiler() {
         if (!fs::exists(AndroidPlugin::JPHP_COMPILER_PATH)) {
             Console::log("-> prepare jPHP compiler ...");
 
-            fs::move(AndroidPlugin::JPHP_COMPILER_PATH, AndroidPlugin::JPHP_COMPILER_RESOURCE);
+            fs::makeDir("./.jpfa/");
+            Tasks::createFile(AndroidPlugin::JPHP_COMPILER_PATH,
+                fs::get(AndroidPlugin::JPHP_COMPILER_RESOURCE));
         }
     }
 
