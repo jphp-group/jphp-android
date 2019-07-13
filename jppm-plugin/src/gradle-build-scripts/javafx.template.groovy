@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     androidRuntime 'com.gluonhq:charm-down-core-android:3.5.0'
-    compile fileTree(dir: 'build', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 jfxmobile {
@@ -33,8 +33,8 @@ jfxmobile {
     }
     android {
         compileSdkVersion  = %sdk%
-        buildToolsVersion  = %sdk-tools%
-        applicationPackage = %package-name%
+        buildToolsVersion  = "%sdk-tools%"
+        applicationPackage = "%id%"
     }
 }
 

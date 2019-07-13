@@ -121,12 +121,11 @@ class AndroidPlugin {
     protected function generate_gradle_build(Event $event) {
         Console::log('-> prepare build.gradle ...');
 
-        fs::move($event->package()->getAny('android.ui', "javafx") == "javafx" ?
-            AndroidPlugin::JPHP_BUILD_TEMPLATE_JAVAFX : AndroidPlugin::JPHP_BUILD_TEMPLATE_NATIVE, "./build.gradle");
-
-        $template = fs::get("./build.gradle");
+        Tasks::createFile("./build.gradle");
+        $template = Stream::getContents($event->package()->getAny('android.ui', "javafx") == "javafx" ?
+            AndroidPlugin::JPHP_BUILD_TEMPLATE_JAVAFX : AndroidPlugin::JPHP_BUILD_TEMPLATE_NATIVE);
         foreach ($event->package()->getAny('android', []) as $key => $value)
-            $template = str::replace($template, $key, $value);
+            $template = str::replace($template, "%$key%", $value);
 
         Stream::putContents("./build.gradle", $template);
     }
