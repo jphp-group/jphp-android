@@ -1,0 +1,14 @@
+/.idea/**
+/.gradle/**
+/gradle/**
+/vendor/**
+/build/**
+/jars/**
+
+/build.gradle
+/gradlew
+/gradlew.bat
+/package-lock.php.yml
+/package.hub.yml
+
+**/*.iml

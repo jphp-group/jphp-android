@@ -2,11 +2,13 @@
 
 use packager\Event;
 use packager\cli\Console;
+use php\lib\fs;
 
 /**
  * @jppm-task module:build
- * @jppm-description Build jppm plugin module
+ * @jppm-description Build jphp-compiler module
  */
-function task_compiler_build(Event $e) {
+function task_compiler_build(Event $e)
+{
     Tasks::run("publish", [], "yes");
 }

@@ -1,0 +1,41 @@
+name: jphp-android-javafx-ui-ext
+version: 1.0.0
+
+plugins:
+  - 'Gradle'
+  - 'Doc'
+  - 'Hub'
+
+gradle:
+  repos:
+    - "http://nexus.gluonhq.com/nexus/content/repositories/releases/" # gluon repository
+  deps:
+    - "com.gluonhq:charm:4.4.3"
+    - "com.airhacks:afterburner.mfx:1.6.2"
+
+deps:
+  jphp-runtime: '*'
+  jphp-xml-ext: '*'
+
+hub:
+  login: "yousan4ik@gmail.com"
+
+config:
+  ignore:
+    - /sandbox/**
+    - /.idea/**
+    - /.gradle/**
+    - /*.iml
+    - /.git/**
+    - /examples/**
+    - /gradle/**
+    - /jars/**
+    - /build/**
+    - /package.hub.yml
+
+
+doc:
+  url-prefix: https://github.com/jphp-group/jphp-android/tree/master/ui-javafx/api-docs/
+  langs:
+    en: English
+    ru: Русский
