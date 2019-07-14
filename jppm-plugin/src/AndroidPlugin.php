@@ -44,6 +44,8 @@ class AndroidPlugin {
     public const PROJECT_NAME_READ = "Android application name";
     public const PROJECT_ID_READ = "Android application ID";
 
+    public const JPHP_COMPILER_MAIN_CLASS = "org.venity.compiler.Main";
+
     /**
      * Init android project
      *
@@ -106,15 +108,21 @@ class AndroidPlugin {
             if (!$entry->isDirectory()) {
                 fs::makeFile(fs::abs('./build/out/' . $entry->name));
                 fs::copy($stream, fs::abs('./build/out/' . $entry->name));
-                echo '.';
             } else fs::makeDir(fs::abs('./build/out/' . $entry->name));
         });
-        echo ". done\n";
+        echo "  -> done\n";
 
         Console::log('-> starting compiler ...');
 
+        $classPath = fs::parseAs("./vendor/paths.json", "json")["classPaths"][""];
+        foreach ($classPath as $key => $path)
+            $classPath[$key] = fs::normalize(fs::abs("./vendor/") . $path);
+
+        $classPath = str::join($classPath, File::PATH_SEPARATOR) . File::PATH_SEPARATOR . AndroidPlugin::JPHP_COMPILER_PATH;
+
         $process = new Process([
-            'java', '-jar', AndroidPlugin::JPHP_COMPILER_PATH,
+            'java', '-cp', $classPath,
+            AndroidPlugin::JPHP_COMPILER_MAIN_CLASS,
             '--src', './build/out',
             '--dest', './libs/compile.jar'
         ], './');
