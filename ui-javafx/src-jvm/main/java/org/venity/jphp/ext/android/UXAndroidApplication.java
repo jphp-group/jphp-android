@@ -14,18 +14,23 @@ import org.venity.jphp.ext.android.android.classes.UXMobileApplication;
 
 public class UXAndroidApplication extends MobileApplication {
 
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	@Override
+	public void init() {
+		
+	}
+
     @Override
     public void postInit(Scene scene) {
 		try {
 			StandaloneAndroidLoader loader = new StandaloneAndroidLoader();
-			System.out.println("Starting JPHP android application");
-				System.out.println("Code with love by venity");
-
-				loader.setClassLoader(getClass().getClassLoader());
-				loader.loadLibrary();
-				loader.run();
+			loader.setClassLoader(getClass().getClassLoader());
+			loader.loadLibrary();
+			loader.run();
 		} catch (Exception e) {
-
 			getAppBar().setNavIcon(MaterialDesignIcon.CLOSE.button(event -> {
 				System.exit(1);
 			}));
