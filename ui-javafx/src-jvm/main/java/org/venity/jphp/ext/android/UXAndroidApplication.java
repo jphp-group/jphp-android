@@ -1,16 +1,16 @@
 package org.venity.jphp.ext.android;
 
 import com.gluonhq.charm.glisten.application.MobileApplication;
-import java.io.IOException;
 
 import com.gluonhq.charm.glisten.control.TextArea;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.scene.Scene;
-import com.gluonhq.charm.glisten.control.ExceptionDialog;
 import javafx.scene.control.Label;
-import org.venity.jphp.ext.android.android.classes.UXMobileApplication;
+import com.gluonhq.charm.down.Platform;
+import com.gluonhq.charm.down.Services;
+import com.gluonhq.charm.down.plugins.DisplayService;
+import javafx.stage.Stage;
 
 public class UXAndroidApplication extends MobileApplication {
 
@@ -25,6 +25,20 @@ public class UXAndroidApplication extends MobileApplication {
 
     @Override
     public void postInit(Scene scene) {
+
+        if (Platform.isDesktop()) {
+            Services.get(DisplayService.class)
+                 .ifPresent(service -> {
+                        if (service.isTablet()) {
+                            scene.getWindow().setWidth(600);
+                            scene.getWindow().setHeight(800);
+                        }
+                 });
+
+            Stage stage = (Stage) scene.getWindow();
+            stage.setTitle("jPHP For Android sandbox");
+        }
+
 		try {
 			StandaloneAndroidLoader loader = new StandaloneAndroidLoader();
 			loader.setClassLoader(getClass().getClassLoader());

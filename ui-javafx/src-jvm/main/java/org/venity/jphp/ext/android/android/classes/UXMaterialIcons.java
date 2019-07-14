@@ -22,38 +22,34 @@ public class UXMaterialIcons extends BaseWrapper<MaterialDesignIcon>{
 
     @Reflection.Signature
     public void __construct(String icon){
-
         __wrappedObject = MaterialDesignIcon.valueOf(icon.toUpperCase());
     }
 
     @Reflection.Signature
-    public void __construct(){
+    public void __construct() {
         __wrappedObject = MaterialDesignIcon.CODE;
     }
 
     @Reflection.Signature
-    public Node graphic(){
+    public Node graphic() {
         return getWrappedObject().graphic("");
     }
 
     @Reflection.Signature
-    public Node graphic(String styles){
+    public Node graphic(String styles) {
         return getWrappedObject().graphic(styles);
     }
 
     @Reflection.Signature
-    public Node button(){
+    public Node button() {
         return getWrappedObject().button(null);
     }
 
     @Reflection.Signature
-    public Node button(Invoker callback){
+    public Node button(Invoker callback) {
         return getWrappedObject().button(event -> {
-            if (callback != null) try {
-                callback.call();
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            if (callback != null)
+                callback.callNoThrow();
         });
     }
 
