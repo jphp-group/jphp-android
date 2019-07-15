@@ -40,6 +40,9 @@ jfxmobile {
         plugins 'browser', 'cache', 'device', 'display', 'lifecycle', 'settings', 'statusbar', 'storage', 'vibration'
     }
     android {
+        manifest = "./android/AndroidManifest.xml"
+        resourcesDirectory =  new java.io.File("./android/")
+        androidSdk = "%sdk-path%"
         compileSdkVersion  = %sdk%
         buildToolsVersion  = "%sdk-tools%"
         applicationPackage = "%id%"

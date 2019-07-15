@@ -6,6 +6,8 @@ use packager\cli\Console;
 use php\io\File;
 use php\io\IOException;
 use php\io\Stream;
+use php\lang\IllegalArgumentException;
+use php\lang\IllegalStateException;
 use php\lang\Process;
 use php\lib\fs;
 use php\lib\str;
@@ -36,6 +38,7 @@ class AndroidPlugin {
     public const GRADLEW_UNIX_RESOURCE = "res://gradle/gradlew";
     public const GRADLEW_WIN_FILE = "./gradlew.bat";
     public const GRADLEW_WIN_RESOURCE = "res://gradle/gradlew.bat";
+    public const ANDROID_JAVAFX_RESOURCES = "res://javafx-android-res.zip";
 
     // messages
     public const ANDROID_SDK_READ = "Android SDK Version";
@@ -82,14 +85,33 @@ class AndroidPlugin {
             Console::error("Unsupported UI type " . $config["ui"] . ", supported UIs: [javafx, native]");
             exit(102);
         }
+
+        $config["name"] = $event->package()->getName();
+        $config["version-name"] = $event->package()->getVersion('last');
+        $config["version-code"] = intval($event->package()->getVersion('1'));
+
+        $zip = new ZipArchive(Stream::of(AndroidPlugin::ANDROID_JAVAFX_RESOURCES));
+        $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($config) {
+            if (!$entry->isDirectory()) {
+                $filePath = fs::abs('./android/' . $entry->name);
+                fs::makeFile($filePath);
+                fs::copy($stream, $filePath);
+                if (fs::ext($filePath) != "xml") return;
+
+                foreach ($config as $key => $val)
+                    Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
+            } else fs::makeDir(fs::abs('./android/' . $entry->name));
+        });
     }
 
     /**
      * @param Event $event
      * @param string $task
      *
-     * @throws \php\lang\IllegalArgumentException
-     * @throws \php\lang\IllegalStateException
+     * @throws IOException
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws \php\format\ProcessorException
      */
     public function exec_gradle_task(Event $event, string $task) {
         $this->check_environment();
@@ -148,8 +170,10 @@ class AndroidPlugin {
      * Compile project
      *
      * @param Event $event
-     * @throws \php\lang\IllegalArgumentException
-     * @throws \php\lang\IllegalStateException
+     * @throws IOException
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws \php\format\ProcessorException
      */
     public function compile(Event $event) {
         if ($event->package()->getAny('android.ui', "") == "javafx")
@@ -166,8 +190,10 @@ class AndroidPlugin {
      * Run project on desktop
      *
      * @param Event $event
-     * @throws \php\lang\IllegalArgumentException
-     * @throws \php\lang\IllegalStateException
+     * @throws IOException
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws \php\format\ProcessorException
      */
     public function run(Event $event) {
         if ($event->package()->getAny('android.ui', "") == "javafx")
@@ -220,7 +246,11 @@ class AndroidPlugin {
         Tasks::createFile("./build.gradle");
         $template = Stream::getContents($event->package()->getAny('android.ui', "javafx") == "javafx" ?
             AndroidPlugin::JPHP_BUILD_TEMPLATE_JAVAFX : AndroidPlugin::JPHP_BUILD_TEMPLATE_NATIVE);
-        foreach ($event->package()->getAny('android', []) as $key => $value)
+
+        $config = $event->package()->getAny('android', []);
+        $config["sdk-path"] = str::replace($_ENV["ANDROID_HOME"], "\\", "\\\\");
+
+        foreach ($config as $key => $value)
             $template = str::replace($template, "%$key%", $value);
 
         Stream::putContents("./build.gradle", $template);
