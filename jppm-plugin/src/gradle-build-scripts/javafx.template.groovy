@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.javafxports:jfxmobile-plugin:1.3.16'
+        classpath 'org.javafxports:jfxmobile-plugin:1.3.10'
     }
 }
 
@@ -34,9 +34,9 @@ dependencies {
 }
 
 jfxmobile {
-    javafxportsVersion = '8.60.11'
+    javafxportsVersion = '8.60.9'
     downConfig {
-        version = '3.8.6'
+        version = '3.8.0'
         plugins 'browser', 'cache', 'device', 'display', 'lifecycle', 'settings', 'statusbar', 'storage', 'vibration'
     }
     android {
