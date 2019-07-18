@@ -69,7 +69,8 @@ class AndroidPlugin {
             "id" => $_ENV["JPHP_ANDROID_APPLICATION_ID"] ?:
                 Console::read(AndroidPlugin::PROJECT_ID_READ, "org.develnext.jphp.android"),
             "ui" => $_ENV["JPHP_ANDROID_UI"] ?:
-                Console::read(AndroidPlugin::ANDROID_UI_READ, "javafx")
+                //Console::read(AndroidPlugin::ANDROID_UI_READ, "javafx")
+                "javafx" // TODO: make native UI package
         ];
 
         // save config to package.php.yml
