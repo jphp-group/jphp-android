@@ -33,7 +33,7 @@ class MainView extends UXView {
      */
     public function updateAppBar(UXAppBar $appBar) {
         $appBar->title   = new UXLabel("jPHP & JavaFX");
-        $appBar->navIcon = (new UXMaterialIcons("MENU"))->button(function () {
+        $appBar->navIcon = UXMaterialIcons::of("MENU")->button(function () {
             // on navigation icon click ....
         });
     }
