@@ -2,19 +2,29 @@
 
 namespace php\android;
 
-
 class UXFloatingActionButton
 {
-    public function __construct()
-    {
+    /**
+     * UXFloatingActionButton constructor.
+     */
+    public function __construct() {
 
     }
 
-    public function setOnAction(callable $callback)
-    {
+    /**
+     * @param callable $callback
+     */
+    public function setOnAction(callable $callback) {
 
     }
 
+    /**
+     * @var string
+     */
     public $text;
+
+    /**
+     * @var bool
+     */
     public $visible;
 }

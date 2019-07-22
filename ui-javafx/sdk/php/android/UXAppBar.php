@@ -2,18 +2,20 @@
 
 namespace php\android;
 
-
 use php\gui\UXControl;
+use php\gui\UXList;
 use php\gui\UXNode;
 
 class UXAppBar extends UXControl
 {
+    /**
+     * UXAppBar constructor.
+     */
+    public function __construct() {
 
-    public function __construct()
-    {
     }
 
-    public function clear(){
+    public function clear() {
 
     }
 
@@ -38,7 +40,7 @@ class UXAppBar extends UXControl
     public $items;
 
     /**
-     * @var string
+     * @var UXNode
      */
     public $title;
 

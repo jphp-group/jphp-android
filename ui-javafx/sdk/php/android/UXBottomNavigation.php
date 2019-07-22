@@ -9,11 +9,13 @@ use php\gui\UXList;
 class UXBottomNavigation extends UXControl
 {
 
-    public function __construct($type = null)
-    {
+    /**
+     * UXBottomNavigation constructor.
+     * @param string $type
+     */
+    public function __construct(string $type = null) {
 
     }
-
 
     /**
      * @var string

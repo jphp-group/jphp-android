@@ -6,14 +6,17 @@ namespace php\android;
 
 class UXSwatch
 {
-
-    public function __construct()
-    {
+    /**
+     * UXSwatch constructor.
+     */
+    public function __construct() {
     }
 
-    public static function of($color) : UXSwatch
-    {
+    /**
+     * @param $color
+     * @return UXSwatch
+     */
+    public static function of($color) : UXSwatch {
 
     }
-
 }

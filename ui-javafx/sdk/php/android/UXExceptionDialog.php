@@ -1,27 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: themr
- * Date: 25.08.2018
- * Time: 20:18
- */
 
 namespace php\android;
 
-
-
 class UXExceptionDialog extends UXAndroidDialog
 {
+    /**
+     * UXExceptionDialog constructor.
+     */
+    public function __construct() {
 
-    function __construct()
-    {
     }
 
     /**
      * @var \Exception
      */
     public $exception;
+
+    /**
+     * @var string
+     */
     public $introText = "";
-
-
 }

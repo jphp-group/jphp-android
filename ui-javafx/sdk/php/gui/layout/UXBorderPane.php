@@ -8,9 +8,10 @@ use php\gui\UXNode;
 
 class UXBorderPane extends UXPane
 {
-
-    public function __construct()
-    {
+    /**
+     * UXBorderPane constructor.
+     */
+    public function __construct() {
     }
 
     /**

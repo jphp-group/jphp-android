@@ -7,10 +7,16 @@ use php\gui\paint\UXColor;
 
 class UXStatusBar
 {
-    public function __construct()
-    {
+    /**
+     * UXStatusBar constructor.
+     */
+    public function __construct() {
+
     }
 
+    /**
+     * @var string
+     */
     public $color;
 
     public function setUXColor(UXColor $color)

@@ -8,10 +8,16 @@ use php\gui\UXNode;
 
 class UXSidePopupView extends UXPane
 {
-    public function __construct(UXNode $node = null)
-    {
+    /**
+     * UXSidePopupView constructor.
+     * @param UXNode|null $node
+     */
+    public function __construct(UXNode $node = null) {
+
     }
 
+    /**
+     * @var string
+     */
     public $showSide;
-
 }

@@ -3,6 +3,7 @@
 use packager\Event;
 use packager\Package;
 use packager\cli\Console;
+use php\format\YamlProcessor;
 use php\io\File;
 use php\io\IOException;
 use php\io\Stream;
@@ -76,7 +77,7 @@ class AndroidPlugin {
         // save config to package.php.yml
         $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
         $yaml["android"] = $config;
-        fs::formatAs("./" . Package::FILENAME, $yaml, "yaml");
+        fs::formatAs("./" . Package::FILENAME, $yaml, "yaml", YamlProcessor::SERIALIZE_PRETTY_FLOW);
 
         if ($config["ui"] == "javafx") {
             Tasks::run("add", [ "jphp-android-javafx-ui-ext" ], null);

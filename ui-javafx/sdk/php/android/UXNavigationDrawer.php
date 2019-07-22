@@ -2,14 +2,16 @@
 
 namespace php\android;
 
-
+use php\gui\UXControl;
 use php\gui\UXList;
 use php\gui\UXNode;
 
-class UXNavigationDrawer
-{
-    public function __construct()
-    {
+class UXNavigationDrawer extends UXControl {
+
+    /**
+     * UXNavigationDrawer constructor.
+     */
+    public function __construct() {
     }
 
     /**

@@ -1,28 +1,28 @@
 <?php
 namespace php\android;
 
-
 use php\gui\UXList;
 use php\gui\UXNode;
 
 class UXAndroidDialog
 {
-
-    public function __construct()
-    {
+    /**
+     * UXAndroidDialog constructor.
+     */
+    public function __construct() {
     }
 
     /**
      * Показать диалог
      */
-    public function show(){
+    public function show() {
 
     }
 
     /**
      * Скрыть диалог
      */
-    public function hide(){
+    public function hide() {
 
     }
 
@@ -63,6 +63,7 @@ class UXAndroidDialog
      * @var UXNode
      */
     public $content;
+
     /*
      * @var callable
      */

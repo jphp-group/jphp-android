@@ -7,8 +7,11 @@ use php\gui\UXControl;
 
 class UXRating extends UXControl
 {
-    public function __construct()
-    {
+    /**
+     * UXRating constructor.
+     */
+    public function __construct() {
+
     }
 
     /**
@@ -35,6 +38,4 @@ class UXRating extends UXControl
      * @var bool
      */
     public $updateOnHover;
-
-
 }

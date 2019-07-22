@@ -4,5 +4,11 @@ namespace php\android;
 
 class UXAndroidAlert extends UXAndroidDialog {
 
-    public function __construct($type = "INFORMATION"){}
+    /**
+     * UXAndroidAlert constructor.
+     * @param string $type
+     */
+    public function __construct($type = "INFORMATION") {
+
+    }
 }

@@ -5,14 +5,29 @@ namespace php\android;
 
 class UXToast
 {
-    public function __construct()
-    {
+    /**
+     * UXToast constructor.
+     */
+    public function __construct() {
+
     }
 
-    public function show(){}
-    public function hide(){}
+    public function show() {
 
+    }
+
+    public function hide() {
+
+    }
+
+    /**
+     * @var int
+     */
     public $duration;
+
+    /**
+     * @var string
+     */
     public $text;
 
 }
