@@ -3,13 +3,10 @@ package com.gluonhq.impl.charm.a.c;
 import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.plugins.StorageService;
 import com.gluonhq.charm.glisten.license.License;
-import javafx.application.Platform;
 
 import java.io.*;
-import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

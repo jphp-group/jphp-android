@@ -1,5 +1,7 @@
 package org.venity.jphp.ext.android;
 
+import com.gluonhq.charm.down.Services;
+import com.gluonhq.charm.down.plugins.StorageService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.StatusBar;
 import com.gluonhq.charm.glisten.control.*;
@@ -47,6 +49,7 @@ import javafx.scene.web.*;
 import javafx.stage.*;
 import netscape.javascript.JSException;
 import org.venity.jphp.ext.android.android.classes.*;
+import org.venity.jphp.ext.android.android.classes.services.PStorageService;
 import org.venity.jphp.ext.android.android.classes.support.PView;
 import org.venity.jphp.ext.android.fx.bind.*;
 import org.venity.jphp.ext.android.fx.classes.*;
@@ -73,6 +76,7 @@ import php.runtime.memory.support.MemoryOperation;
 public class AndroidExtension extends Extension {
     public static final String NS_FX = "php\\gui";
     public static final String NS_ANDROID = "php\\android";
+    public static final String NS_ANDROID_SERVICE = "php\\android\\services";
 
     @Override
     public Status getStatus() {
@@ -82,7 +86,7 @@ public class AndroidExtension extends Extension {
     @Override
     public String getName()
     {
-        return "JavaFXPorts and Android";
+        return "JavaFXPorts";
     }
 
     @Override
@@ -268,6 +272,10 @@ public class AndroidExtension extends Extension {
 
         registerClass(scope, UXDialog.class);
         registerClass(scope, UXClipboard.class);
+
+        registerWrapperClass(scope, Services.class, UXServices.class);
+
+        registerWrapperClass(scope, StorageService.class, PStorageService.class);
 
         registerJavaException(scope, WrapJSException.class, JSException.class);
 

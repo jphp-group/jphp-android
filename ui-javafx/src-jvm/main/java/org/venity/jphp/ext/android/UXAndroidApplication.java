@@ -3,6 +3,7 @@ package org.venity.jphp.ext.android;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 
 import com.gluonhq.charm.glisten.control.TextArea;
+import com.gluonhq.charm.glisten.layout.Layer;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ public class UXAndroidApplication extends MobileApplication {
 
 	@Override
 	public void init() {
-		
+
 	}
 
     @Override
