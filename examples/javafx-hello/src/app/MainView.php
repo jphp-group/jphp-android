@@ -17,6 +17,7 @@ class MainView extends UXView {
         parent::__construct();
 
         $button = new UXButton("Hello, World!");
+        $button->graphic = UXMaterialIcons::of("LANGUAGE")->graphic();
         $button->on("click", function () use ($button) {
             $button->text = "Change the world!";
         });
