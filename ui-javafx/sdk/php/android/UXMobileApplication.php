@@ -87,4 +87,11 @@ class UXMobileApplication extends UXApplication
 
     }
 
+    /**
+     * @return UXNavigationDrawer
+     */
+    public static function getDrawer() : UXNavigationDrawer {
+
+    }
+
 }

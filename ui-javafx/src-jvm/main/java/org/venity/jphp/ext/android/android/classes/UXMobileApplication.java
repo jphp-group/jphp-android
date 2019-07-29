@@ -3,13 +3,13 @@ package org.venity.jphp.ext.android.android.classes;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.StatusBar;
 import com.gluonhq.charm.glisten.control.AppBar;
+import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import org.venity.jphp.ext.android.AndroidExtension;
 import org.venity.jphp.ext.android.UXAndroidApplication;
 import org.venity.jphp.ext.android.fx.classes.UXApplication;
-import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
 import php.runtime.invoke.Invoker;
@@ -115,6 +115,11 @@ public class UXMobileApplication extends UXApplication {
     @Reflection.Signature
     public static void setTitle(String title) {
         UXAndroidApplication.getInstance().titleProperty().setValue(title);
+    }
+
+    @Reflection.Signature
+    public static NavigationDrawer getDrawer() {
+        return UXAndroidApplication.getInstance().getDrawer();
     }
 
     @Reflection.Signature

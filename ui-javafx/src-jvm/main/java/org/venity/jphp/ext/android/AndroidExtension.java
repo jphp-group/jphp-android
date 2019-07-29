@@ -233,6 +233,10 @@ public class AndroidExtension extends Extension {
         MemoryOperation.registerWrapper(TableColumn.class, UXTableColumn.class);
         MemoryOperation.registerWrapper(IndexedCell.class, UXCell.class);
 
+        registerWrapperClass(scope, NavigationDrawer.Header.class, UXNavigationDrawerHeader.class);
+        registerWrapperClass(scope, NavigationDrawer.Footer.class, UXNavigationDrawerFooter.class);
+        registerWrapperClass(scope, NavigationDrawer.Item.class, UXNavigationDrawerItem.class);
+
         registerWrapperClass(scope, PaginationEx.class, UXPagination.class);
 
         registerWrapperClass(scope, Dragboard.class, UXDragboard.class);

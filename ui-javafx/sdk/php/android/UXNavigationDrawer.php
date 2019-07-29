@@ -34,4 +34,12 @@ class UXNavigationDrawer extends UXControl {
      * @var UXNode
      */
     public $selectedItem;
+
+    public function open() {
+
+    }
+
+    public function close() {
+
+    }
 }

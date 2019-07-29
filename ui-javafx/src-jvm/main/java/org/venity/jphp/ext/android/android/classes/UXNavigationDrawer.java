@@ -1,7 +1,6 @@
 package org.venity.jphp.ext.android.android.classes;
 
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
-import com.gluonhq.charm.glisten.mvc.View;
 import javafx.scene.Node;
 import org.venity.jphp.ext.android.AndroidExtension;
 import org.venity.jphp.ext.android.fx.classes.UXControl;
@@ -9,8 +8,6 @@ import org.venity.jphp.ext.android.fx.classes.UXList;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
 import php.runtime.reflection.ClassEntity;
-
-import java.util.List;
 
 @Reflection.Name("UXNavigationDrawer")
 @Reflection.Namespace(AndroidExtension.NS_ANDROID)
@@ -64,4 +61,13 @@ public class UXNavigationDrawer extends UXControl<NavigationDrawer> {
         getWrappedObject().setSelectedItem(N);
     }
 
+    @Reflection.Getter
+    public void open(){
+        getWrappedObject().open();
+    }
+
+    @Reflection.Getter
+    public void close(){
+        getWrappedObject().close();
+    }
 }
