@@ -8,10 +8,13 @@ import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.plugins.DisplayService;
 import javafx.stage.Stage;
 import org.venity.jphp.ext.android.android.classes.UXMobileApplication;
+import php.runtime.Memory;
 
 import java.io.IOException;
 
 public class UXAndroidApplication extends MobileApplication {
+
+    private StandaloneAndroidLoader loader;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -19,7 +22,7 @@ public class UXAndroidApplication extends MobileApplication {
 
 	@Override
 	public void init() throws IOException {
-		StandaloneAndroidLoader loader = new StandaloneAndroidLoader();
+	    loader = new StandaloneAndroidLoader();
 		loader.setClassLoader(getClass().getClassLoader());
 		loader.loadLibrary();
 		loader.run();
@@ -40,6 +43,7 @@ public class UXAndroidApplication extends MobileApplication {
             stage.setTitle("jPHP For Android sandbox");
         }
 
-        UXMobileApplication.getCallback().callNoThrow();
+        if (UXMobileApplication.getCallback() != null)
+            UXMobileApplication.getCallback().callNoThrow(Memory.wrap(loader.env, scene));
     }
 }

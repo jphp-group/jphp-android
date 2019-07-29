@@ -18,11 +18,12 @@ use compress\ZipArchiveEntry;
 /**
  * Class AndroidPlugin
  *
- * @jppm-task-prefix android
- * @jppm-task init as init
- * @jppm-task compile as compile
- * @jppm-task compile_install as compile:adb
- * @jppm-task run as run
+ * @jppm-task init as android:init
+ * @jppm-task compile as android:compile
+ * @jppm-task compile_install as android:compile:adb
+ * @jppm-task run as android:run
+ *
+ * @jppm-task compile as build
  */
 class AndroidPlugin {
 
@@ -122,7 +123,7 @@ class AndroidPlugin {
         $this->prepare_compiler();
         $this->generate_gradle_build($event);
 
-        Tasks::run("build", [], null);
+        Tasks::run("app:build", [], null);
 
         $buildFileName = "{$event->package()->getName()}-{$event->package()->getVersion('last')}";
         Console::log('-> unpack jar');
@@ -212,6 +213,8 @@ class AndroidPlugin {
     /**
      * Run project on desktop
      *
+     * @jppm-dependency-of start
+     *
      * @param Event $event
      * @throws IOException
      * @throws IllegalArgumentException
@@ -228,6 +231,8 @@ class AndroidPlugin {
             Console::error("Unable to run unknown UI type");
             exit(103);
         }
+
+        exit(0);
     }
 
     protected function prepare_compiler() {
