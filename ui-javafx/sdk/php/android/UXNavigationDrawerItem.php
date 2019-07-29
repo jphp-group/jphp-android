@@ -35,7 +35,7 @@ class UXNavigationDrawerItem extends UXControl {
      * @var UXNode
      */
     public $graphic;
-    
+
     /**
      * @param callable $callback
      */

@@ -61,12 +61,12 @@ public class UXNavigationDrawer extends UXControl<NavigationDrawer> {
         getWrappedObject().setSelectedItem(N);
     }
 
-    @Reflection.Getter
+    @Reflection.Signature
     public void open(){
         getWrappedObject().open();
     }
 
-    @Reflection.Getter
+    @Reflection.Signature
     public void close(){
         getWrappedObject().close();
     }
