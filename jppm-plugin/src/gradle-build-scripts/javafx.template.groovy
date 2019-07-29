@@ -37,7 +37,7 @@ jfxmobile {
     javafxportsVersion = '8.60.12'
     downConfig {
         version = '3.8.6'
-        plugins 'browser', 'cache', 'device', 'display', 'lifecycle', 'settings', 'statusbar', 'storage', 'vibration'
+        plugins 'browser', 'cache', 'device', 'display', 'lifecycle', 'settings', 'statusbar', 'storage', 'vibration', 'local-notifications'
     }
     android {
         manifest = "./android/AndroidManifest.xml"

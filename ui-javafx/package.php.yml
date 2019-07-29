@@ -8,9 +8,10 @@ plugins:
 
 gradle:
   repos:
-    - "http://nexus.gluonhq.com/nexus/content/repositories/releases/" # gluon repository
+    - "http://nexus.gluonhq.com/nexus/content/repositories/releases/" # Gluon repository
   deps:
     - "com.gluonhq:charm:5.0.2"
+    - "com.gluonhq:charm-down-plugin-local-notifications:3.8.6"
 
 deps:
   jphp-runtime: '*'

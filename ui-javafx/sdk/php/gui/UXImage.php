@@ -83,36 +83,6 @@ class UXImage
     }
 
     /**
-     * Save image to file or stream in passed format, by default png.
-     * --RU--
-     * Сохранить изображение в файл или поток в переданном формате, по-умолчанию png.
-     *
-     * @param string|Stream|File $to
-     * @param string $format
-     */
-    public function save($to, $format = 'png')
-    {
-    }
-
-    /**
-     * Convert to native image.
-     * @return null|Image
-     */
-    public function toNative(): ?Image
-    {
-    }
-
-    /**
-     * Create from native image.
-     *
-     * @param Image $image
-     * @return UXImage
-     */
-    public static function ofNative(Image $image): ?UXImage
-    {
-    }
-
-    /**
      * Создает новую картинку из URL.
      *
      * @param string $url

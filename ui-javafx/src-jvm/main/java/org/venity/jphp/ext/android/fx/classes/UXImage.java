@@ -1,12 +1,10 @@
 package org.venity.jphp.ext.android.fx.classes;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import org.venity.jphp.ext.android.AndroidExtension;
-import org.venity.jphp.ext.android.fx.JavaFXExtension;
 import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.annotation.Reflection.Property;
@@ -14,16 +12,10 @@ import php.runtime.annotation.Reflection.Signature;
 import php.runtime.env.Environment;
 import php.runtime.ext.core.classes.stream.Stream;
 import php.runtime.lang.BaseWrapper;
-import php.runtime.memory.support.MemoryOperation;
 import php.runtime.reflection.ClassEntity;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 @Reflection.Name("UXImage")
 @Reflection.Namespace(AndroidExtension.NS_FX)
@@ -111,65 +103,5 @@ public class UXImage extends BaseWrapper<Image> {
     @Signature
     public static Image ofUrl(String url, boolean background) {
         return new Image(url, background);
-    }
-
-    @Signature
-    public void save(OutputStream stream) throws IOException {
-        save(stream, "png");
-    }
-
-    @Signature
-    public Memory toNative(Environment env) throws Throwable {
-        MemoryOperation operation = MemoryOperation.get(BufferedImage.class, null);
-
-        if (operation != null) {
-            BufferedImage image = SwingFXUtils.fromFXImage(this.getWrappedObject(), null);
-            image = convertToCompatible(image);
-
-            return operation.unconvert(env, env.trace(), image);
-        } else {
-            return Memory.NULL;
-        }
-    }
-
-    @Signature
-    public static UXImage ofNative(Environment env, Memory memory) throws Throwable {
-        MemoryOperation operation = MemoryOperation.get(BufferedImage.class, null);
-
-        if (operation != null) {
-            BufferedImage convert = (BufferedImage) operation.convert(env, env.trace(), memory);
-            WritableImage image = SwingFXUtils.toFXImage(convert, null);
-            return new UXImage(env, image);
-        }
-
-        return null;
-    }
-
-    public static BufferedImage convertToCompatible(BufferedImage image) {
-        GraphicsEnvironment ge =
-                GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
-        GraphicsConfiguration gc = gd.getDefaultConfiguration();
-
-        BufferedImage compatible =
-                gc.createCompatibleImage(image.getWidth(),
-                        image.getHeight());
-
-        if (compatible.getType() == image.getType())
-            return image;
-
-        ColorConvertOp op = new ColorConvertOp(
-                image.getColorModel().getColorSpace(),
-                compatible.getColorModel().getColorSpace(),null);
-
-        return op.filter(image,compatible);
-    }
-
-    @Signature
-    public void save(OutputStream stream, String format) throws IOException {
-        BufferedImage image = SwingFXUtils.fromFXImage(this.getWrappedObject(), null);
-        image = convertToCompatible(image);
-
-        ImageIO.write(image, format, stream);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace php\android\services;
 
-use php\android\UXServices;
 use php\io\File;
 
 abstract class StorageService {
@@ -11,10 +10,9 @@ abstract class StorageService {
 
     /**
      * @return StorageService
-     * @throws \php\lang\JavaException
      */
     public static function get() : StorageService {
-        return UXServices::get(StorageService::SERVICE);
+        return null;
     }
 
     /**
