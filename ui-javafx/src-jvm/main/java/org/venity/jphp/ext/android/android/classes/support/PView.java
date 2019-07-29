@@ -1,6 +1,5 @@
 package org.venity.jphp.ext.android.android.classes.support;
 
-
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import javafx.beans.NamedArg;
@@ -10,22 +9,16 @@ import php.runtime.env.Environment;
 import php.runtime.invoke.Invoker;
 import php.runtime.memory.ObjectMemory;
 
-
 public class PView extends View {
 
     private Invoker updateAppBar;
     private Environment env;
 
-    public PView(@NamedArg("name") String name) {
-        super(name);
-    }
-
     public PView(@NamedArg("content") Node content) {
         super(content);
     }
-
-    public PView(@NamedArg("name") String name, @NamedArg("content") Node content) {
-        super(name, content);
+    public PView() {
+        super();
     }
 
     public final void updateAppBar(AppBar a){

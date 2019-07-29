@@ -11,8 +11,6 @@ import java.lang.Exception;
 @Reflection.Name("UXExceptionDialog")
 @Reflection.Namespace(AndroidExtension.NS_ANDROID)
 public class UXExceptionDialog extends UXAndroidDialog {
-
-
     public UXExceptionDialog(Environment env, ExceptionDialog wrappedObject) {
         super(env, wrappedObject);
     }

@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.javafxports:jfxmobile-plugin:1.3.10'
+        classpath 'org.javafxports:jfxmobile-plugin:1.3.15'
     }
 }
 
@@ -29,14 +29,14 @@ repositories {
 }
 
 dependencies {
-    androidRuntime 'com.gluonhq:charm-down-core-android:3.5.0'
+    androidRuntime 'com.gluonhq:charm-down-core-android:3.8.6'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 jfxmobile {
-    javafxportsVersion = '8.60.9'
+    javafxportsVersion = '8.60.12'
     downConfig {
-        version = '3.8.0'
+        version = '3.8.6'
         plugins 'browser', 'cache', 'device', 'display', 'lifecycle', 'settings', 'statusbar', 'storage', 'vibration'
     }
     android {

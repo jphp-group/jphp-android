@@ -27,8 +27,10 @@ jppm android:init # Инициализируем Android проект
 use app\MainView;
 use php\android\UXMobileApplication;
 
-UXMobileApplication::addView("home", new MainView()); // add view
-UXMobileApplication::showView("home"); // show view
+UXMobileApplication::launch(function () {
+    UXMobileApplication::addView("home", new MainView()); // add view
+    UXMobileApplication::showView("home"); // show view
+});
 ```
 
 Компилируем с помощью команды `jppm android:compile` или запускаем с помощью команды `jppm android:run`, и видим наш Hello, World!

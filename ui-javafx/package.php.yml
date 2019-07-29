@@ -10,8 +10,7 @@ gradle:
   repos:
     - "http://nexus.gluonhq.com/nexus/content/repositories/releases/" # gluon repository
   deps:
-    - "com.gluonhq:charm:4.4.5"
-    - "com.airhacks:afterburner.mfx:1.6.2"
+    - "com.gluonhq:charm:5.0.2"
 
 deps:
   jphp-runtime: '*'

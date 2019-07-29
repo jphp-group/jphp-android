@@ -1,18 +1,12 @@
 package org.venity.jphp.ext.android.android.classes;
 
 import com.gluonhq.charm.glisten.control.BottomNavigationButton;
-import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.scene.Node;
-import javafx.scene.control.ToggleButton;
 import org.venity.jphp.ext.android.AndroidExtension;
 import org.venity.jphp.ext.android.fx.classes.UXControl;
-import org.venity.jphp.ext.android.fx.classes.UXNode;
-import org.venity.jphp.ext.android.fx.classes.UXToggleButton;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
 import php.runtime.reflection.ClassEntity;
-
-import javax.xml.ws.spi.Invoker;
 
 @Reflection.Name("UXBottomNavigationButton")
 @Reflection.Namespace(AndroidExtension.NS_ANDROID)

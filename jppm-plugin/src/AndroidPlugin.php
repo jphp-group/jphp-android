@@ -21,6 +21,7 @@ use compress\ZipArchiveEntry;
  * @jppm-task-prefix android
  * @jppm-task init as init
  * @jppm-task compile as compile
+ * @jppm-task compile_install as compile:adb
  * @jppm-task run as run
  */
 class AndroidPlugin {
@@ -183,6 +184,26 @@ class AndroidPlugin {
         elseif ($event->package()->getAny('android.ui', "") == "native")
             $this->exec_gradle_task($event, "packageDebug");
         else {
+            Console::error("Unable to compile unknown UI type");
+            exit(103);
+        }
+    }
+
+    /**
+     * Compile and install project
+     *
+     * @param Event $event
+     * @throws IOException
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws \php\format\ProcessorException
+     */
+    public function compile_install(Event $event) {
+        if ($event->package()->getAny('android.ui', "") == "javafx")
+            $this->exec_gradle_task($event, "androidInstall");
+        elseif ($event->package()->getAny('android.ui', "") == "native") {
+            //$this->exec_gradle_task($event, "packageDebug");
+        } else {
             Console::error("Unable to compile unknown UI type");
             exit(103);
         }

@@ -2,6 +2,7 @@ package org.venity.jphp.ext.android.android.classes;
 
 import com.gluonhq.charm.glisten.control.BottomNavigation;
 import com.gluonhq.charm.glisten.control.BottomNavigationButton;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import org.venity.jphp.ext.android.AndroidExtension;
 import org.venity.jphp.ext.android.fx.classes.UXControl;
@@ -44,7 +45,7 @@ public class UXBottomNavigation extends UXControl<BottomNavigation> {
 
     @Reflection.Getter
     public UXList<Node> getItems(){
-        return new UXList<Node>(__env__, getWrappedObject().getActionItems());
+        return new UXList<Node>(__env__, (ObservableList) getWrappedObject().getActionItems());
     }
 
 }

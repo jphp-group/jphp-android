@@ -2,8 +2,9 @@
 
 namespace php\android;
 
+use php\gui\layout\UXBorderPane;
 
-class UXView extends UXMobileLayoutPane
+class UXView extends UXBorderPane
 {
     /**
      * UXView constructor.
@@ -24,18 +25,6 @@ class UXView extends UXMobileLayoutPane
      */
     public function isShowing() : bool
     {
-
-    }
-
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @param UXFloatingActionButton $fab
-     */
-    public function addActionButton(UXFloatingActionButton $fab) {
 
     }
 }

@@ -1,11 +1,9 @@
 package org.venity.jphp.ext.android.android.classes;
 
 import com.gluonhq.charm.glisten.control.Alert;
-import com.gluonhq.charm.glisten.control.Dialog;
 import org.venity.jphp.ext.android.AndroidExtension;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
-import php.runtime.lang.BaseWrapper;
 import php.runtime.reflection.ClassEntity;
 import javafx.scene.control.Alert.*;
 
@@ -34,7 +32,7 @@ public class UXAndroidAlert extends UXAndroidDialog {
 
     @Reflection.Signature
     public void __construct(){
-        __construct("INFORMATIOn");
+        __construct("INFORMATION");
     }
 
 }

@@ -3,8 +3,9 @@ package com.gluonhq.impl.charm.a.c;
 import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.plugins.StorageService;
 import com.gluonhq.charm.glisten.license.License;
-
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -17,8 +18,8 @@ public class a {
     public a() {
     }
 
-    public static boolean a(final String var0, License var1, final Runnable var2) {
-        return true;
+    public static String a(final String var0, License var1, final Runnable var2) {
+        return var0;
     }
 
     public static String a(String var0) {
@@ -46,7 +47,7 @@ public class a {
 
     static {
         try {
-            b = (File) Services.get(StorageService.class).flatMap(StorageService::getPrivateStorage).orElseThrow(() -> {
+            b = (File)Services.get(StorageService.class).flatMap(StorageService::getPrivateStorage).orElseThrow(() -> {
                 return new IOException("Private storage file not available");
             });
         } catch (IOException var1) {

@@ -9,13 +9,25 @@ import com.gluonhq.charm.glisten.visual.Swatch;
 import org.venity.jphp.ext.android.AndroidExtension;
 import org.venity.jphp.ext.android.UXAndroidApplication;
 import org.venity.jphp.ext.android.fx.classes.UXApplication;
+import php.runtime.Memory;
 import php.runtime.annotation.Reflection;
 import php.runtime.env.Environment;
+import php.runtime.invoke.Invoker;
 import php.runtime.reflection.ClassEntity;
 
 @Reflection.Name("UXMobileApplication")
 @Reflection.Namespace(AndroidExtension.NS_ANDROID)
 public class UXMobileApplication extends UXApplication {
+
+    public static Invoker getCallback() {
+        return callback;
+    }
+
+    public static void setCallback(Invoker c) {
+        callback = c;
+    }
+
+    protected static Invoker callback;
 
     public UXMobileApplication(Environment env, MobileApplication wrappedObject) {
         super(env, wrappedObject);
@@ -103,5 +115,10 @@ public class UXMobileApplication extends UXApplication {
     @Reflection.Signature
     public static void setTitle(String title) {
         UXAndroidApplication.getInstance().titleProperty().setValue(title);
+    }
+
+    @Reflection.Signature
+    public static void launch(Invoker invoker) {
+        setCallback(invoker);
     }
 }

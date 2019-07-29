@@ -85,8 +85,6 @@ public class UXApplication extends BaseWrapper<Application> {
             return callback.call();
         }
 
-        new JFXPanel();
-
         FutureTask<Memory> futureTask = new FutureTask<>(() -> {
             try {
                 return callback.callNoThrow();
@@ -110,8 +108,6 @@ public class UXApplication extends BaseWrapper<Application> {
         if (isShutdown()) {
             return;
         }
-
-        new JFXPanel(); // lol WTF!?
 
         Platform.runLater(() -> {
             try {
