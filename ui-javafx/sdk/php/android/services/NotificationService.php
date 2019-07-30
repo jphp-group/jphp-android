@@ -2,7 +2,7 @@
 
 namespace php\android\services;
 
-class NotificationService {
+abstract class NotificationService {
 
     /**
      * @return NotificationService
@@ -14,21 +14,15 @@ class NotificationService {
     /**
      * @param Notification $notification
      */
-    public function notify(Notification $notification) {
-        // some native code ...
-    }
+    abstract public function notify(Notification $notification);
 
     /**
      * @param Notification $notification
      */
-    public function remove(Notification $notification) {
-        // some native code ...
-    }
+    abstract public function remove(Notification $notification);
 
     /**
      * @return Notification[]
      */
-    public function getAllNotifications(): array {
-        return [];
-    }
+    abstract public function getAllNotifications(): array;
 }

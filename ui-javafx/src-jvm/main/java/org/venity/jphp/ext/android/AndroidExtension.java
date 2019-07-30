@@ -1,10 +1,7 @@
 package org.venity.jphp.ext.android;
 
 import com.gluonhq.charm.down.Services;
-import com.gluonhq.charm.down.plugins.DeviceService;
-import com.gluonhq.charm.down.plugins.LocalNotificationsService;
-import com.gluonhq.charm.down.plugins.Notification;
-import com.gluonhq.charm.down.plugins.StorageService;
+import com.gluonhq.charm.down.plugins.*;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.StatusBar;
 import com.gluonhq.charm.glisten.control.*;
@@ -52,6 +49,7 @@ import netscape.javascript.JSException;
 import org.venity.jphp.ext.android.android.classes.*;
 import org.venity.jphp.ext.android.android.classes.services.PDeviceService;
 import org.venity.jphp.ext.android.android.classes.services.PNotificationService;
+import org.venity.jphp.ext.android.android.classes.services.PStatusBarService;
 import org.venity.jphp.ext.android.android.classes.services.PStorageService;
 import org.venity.jphp.ext.android.android.classes.services.notifications.PNotification;
 import org.venity.jphp.ext.android.android.classes.support.PView;
@@ -282,6 +280,7 @@ public class AndroidExtension extends Extension {
         registerWrapperClass(scope, StorageService.class, PStorageService.class);
         registerWrapperClass(scope, DeviceService.class,  PDeviceService.class);
         registerWrapperClass(scope, LocalNotificationsService.class, PNotificationService.class);
+        registerWrapperClass(scope, StatusBarService.class, PStatusBarService.class);
 
         registerWrapperClass(scope, Notification.class, PNotification.class);
 
