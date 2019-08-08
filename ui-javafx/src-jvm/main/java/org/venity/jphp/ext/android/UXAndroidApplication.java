@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import org.venity.jphp.ext.android.android.classes.UXMobileApplication;
 import php.runtime.Memory;
 
-import java.io.IOException;
-
 public class UXAndroidApplication extends MobileApplication {
 
     private StandaloneAndroidLoader loader;
@@ -21,15 +19,26 @@ public class UXAndroidApplication extends MobileApplication {
 	}
 
 	@Override
-	public void init() throws IOException {
-	    loader = new StandaloneAndroidLoader();
-		loader.setClassLoader(getClass().getClassLoader());
-		loader.loadLibrary();
-		loader.run();
+	public void init() {
+	    addViewFactory("$$$Splash$$$", SplashView::new);
+
+	    new Thread(() -> {
+	        // load jPHP
+	        try {
+                loader = new StandaloneAndroidLoader();
+                loader.setClassLoader(getClass().getClassLoader());
+                loader.loadLibrary();
+                loader.run();
+            } catch (Throwable exception) {
+	            exception.printStackTrace();
+            }
+        }).start();
 	}
 
     @Override
     public void postInit(Scene scene) {
+	    switchView("$$$Splash$$$");
+
         if (Platform.isDesktop()) {
             Services.get(DisplayService.class)
                  .ifPresent(service -> {
@@ -43,7 +52,17 @@ public class UXAndroidApplication extends MobileApplication {
             stage.setTitle("jPHP For Android sandbox");
         }
 
-        if (UXMobileApplication.getCallback() != null)
-            UXMobileApplication.getCallback().callNoThrow(Memory.wrap(loader.env, scene));
+        new Thread(() -> {
+            while (true) {
+                if (loader.isLoaded()) {
+                    javafx.application.Platform.runLater(() -> {
+                        if (UXMobileApplication.getCallback() != null)
+                            UXMobileApplication.getCallback().callNoThrow(Memory.wrap(loader.env, scene));
+                    });
+
+                    break;
+                }
+            }
+        }).start();
     }
 }

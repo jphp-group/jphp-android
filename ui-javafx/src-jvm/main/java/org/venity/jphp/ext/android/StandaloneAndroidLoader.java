@@ -35,6 +35,7 @@ public class StandaloneAndroidLoader {
     protected final Properties config;
 
     protected boolean isDebug;
+    private boolean loaded = false;
 
     private StandaloneLibrary library;
 
@@ -219,6 +220,7 @@ public class StandaloneAndroidLoader {
 
             if (bootstrap != null) {
                 bootstrap.includeNoThrow(env);
+                loaded = true;
             } else {
                 throw new CriticalException("(!) Cannot find bootstrap script.");
             }
@@ -338,5 +340,9 @@ public class StandaloneAndroidLoader {
 
     public Environment getScopeEnvironment() {
         return env;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
     }
 }
