@@ -29,8 +29,6 @@ android {
         applicationId '%id%'
         minSdkVersion 14
         targetSdkVersion %sdk%
-        versionCode %version-code%
-        versionName "%version-name%"
     }
 
     lintOptions {

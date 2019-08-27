@@ -42,6 +42,7 @@ class AndroidPlugin {
     public const GRADLEW_WIN_FILE = "./gradlew.bat";
     public const GRADLEW_WIN_RESOURCE = "res://gradle/gradlew.bat";
     public const ANDROID_JAVAFX_RESOURCES = "res://javafx-android-res.zip";
+    public const ANDROID_NATIVE_RESOURCES = "res://native-android-res.zip";
 
     // messages
     public const ANDROID_SDK_READ = "Android SDK Version";
@@ -72,8 +73,7 @@ class AndroidPlugin {
             "id" => $_ENV["JPHP_ANDROID_APPLICATION_ID"] ?:
                 Console::read(AndroidPlugin::PROJECT_ID_READ, "org.develnext.jphp.android"),
             "ui" => $_ENV["JPHP_ANDROID_UI"] ?:
-                //Console::read(AndroidPlugin::ANDROID_UI_READ, "javafx")
-                "javafx" // TODO: make native UI package
+                Console::read(AndroidPlugin::ANDROID_UI_READ, "javafx")
         ];
 
         // save config to package.php.yml
@@ -94,18 +94,51 @@ class AndroidPlugin {
         $config["version-name"] = $event->package()->getVersion('last');
         $config["version-code"] = intval($event->package()->getVersion('1'));
 
-        $zip = new ZipArchive(Stream::of(AndroidPlugin::ANDROID_JAVAFX_RESOURCES));
-        $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($config) {
-            if (!$entry->isDirectory()) {
-                $filePath = fs::abs('./android/' . $entry->name);
-                fs::makeFile($filePath);
-                fs::copy($stream, $filePath);
-                if (fs::ext($filePath) != "xml") return;
+        if ($config["ui"] == "javafx") {
+            $zip = new ZipArchive(Stream::of(AndroidPlugin::ANDROID_JAVAFX_RESOURCES));
+            $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($config) {
+                if (!$entry->isDirectory()) {
+                    $filePath = fs::abs('./android/' . $entry->name);
+                    fs::makeFile($filePath);
+                    fs::copy($stream, $filePath);
+                    if (fs::ext($filePath) != "xml") return;
 
-                foreach ($config as $key => $val)
-                    Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
-            } else fs::makeDir(fs::abs('./android/' . $entry->name));
-        });
+                    foreach ($config as $key => $val)
+                        Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
+                } else fs::makeDir(fs::abs('./android/' . $entry->name));
+            });
+        } elseif ($config["ui"] == "native") {
+            // save config to package.php.yml
+            $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
+            $yaml["sources"] = [
+                "src-php"
+            ];
+            fs::formatAs("./" . Package::FILENAME, $yaml, "yaml", YamlProcessor::SERIALIZE_PRETTY_FLOW);
+
+            Tasks::cleanDir("./src/");
+            // dirs
+            fs::makeDir("./src-php/");
+
+            fs::makeDir("./src/");
+            fs::makeDir("./src/main/");
+            fs::makeDir("./src/main/res");
+
+            $zip = new ZipArchive(Stream::of(AndroidPlugin::ANDROID_NATIVE_RESOURCES));
+            $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($config) {
+                if (!$entry->isDirectory()) {
+                    $filePath = fs::abs('./src/main/' . $entry->name);
+                    fs::makeFile($filePath);
+                    fs::copy($stream, $filePath);
+                    if (fs::ext($filePath) != "xml") return;
+
+                    foreach ($config as $key => $val)
+                        Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
+                } else fs::makeDir(fs::abs('./src/main/' . $entry->name));
+            });
+        } else {
+            Console::error("Unsupported UI type");
+            exit(-1);
+        }
     }
 
     /**
@@ -145,6 +178,10 @@ class AndroidPlugin {
             $classPath[$key] = fs::normalize(fs::abs("./vendor/") . $path);
 
         $classPath = str::join($classPath, File::PATH_SEPARATOR) . File::PATH_SEPARATOR . AndroidPlugin::JPHP_COMPILER_PATH;
+
+        $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
+
+        $classPath .= File::PATH_SEPARATOR . $_ENV["ANDROID_HOME"] . "/platforms/android-" . $yaml["android"]["sdk"] . "/android.jar";
 
         $process = new Process([
             'java', '-cp', $classPath,
@@ -203,7 +240,7 @@ class AndroidPlugin {
         if ($event->package()->getAny('android.ui', "") == "javafx")
             $this->exec_gradle_task($event, "androidInstall");
         elseif ($event->package()->getAny('android.ui', "") == "native") {
-            //$this->exec_gradle_task($event, "packageDebug");
+            $this->exec_gradle_task($event, "installDebug");
         } else {
             Console::error("Unable to compile unknown UI type");
             exit(103);

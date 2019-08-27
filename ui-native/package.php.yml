@@ -1,0 +1,39 @@
+name: jphp-android-native-ui-ext
+version: 1.0.0
+description: Native UI library for JPFA
+
+plugins:
+  - 'Gradle'
+  - 'Doc'
+  - 'Hub'
+
+deps:
+  jphp-runtime: '*'
+
+gradle:
+  repos:
+    - "https://maven.google.com/" # google repository
+  providedDeps:
+    - "com.google.android:android:4.1.1.4"
+
+hub:
+  login: "yousan4ik@gmail.com"
+
+config:
+  ignore:
+    - /sandbox/**
+    - /.idea/**
+    - /.gradle/**
+    - /*.iml
+    - /.git/**
+    - /examples/**
+    - /gradle/**
+    - /build/**
+    - /package.hub.yml
+
+
+doc:
+  url-prefix: https://github.com/jphp-group/jphp-android/tree/master/ui-native/api-docs/
+  langs:
+    en: English
+    ru: Русский

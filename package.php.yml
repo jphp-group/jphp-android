@@ -5,5 +5,5 @@ description: Tools and libraries for development android applications
 modules:
   - compiler    # AOT compiler for jphp
   - ui-javafx   # wrapper around javafx-ports
-#  - ui-native   # wrapper around native android api (experimental)
+  - ui-native   # wrapper around native android api (experimental)
   - jppm-plugin # plugin for jppm
