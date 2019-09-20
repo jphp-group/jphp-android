@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        android:versionCode="0"
+        android:versionName="{{version}}"
+        package="{{android-id}}">
+
+        <!-- Permission for internet -->
+        <uses-permission android:name="android.permission.INTERNET" />
+        <!-- For more see https://developer.android.com/guide/topics/permissions/overview -->
+
+    <supports-screens android:xlargeScreens="true"/>
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="26"/>
+    <application 
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="{{name}}"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name="android.support.multidex.MultiDexApplication"
+        android:debuggable="false">
+        <activity
+                android:name="javafxports.android.FXActivity"
+                android:label="{{name}}"
+                android:launchMode="singleTop"
+                android:configChanges="orientation|screenSize">  <!-- DONT CHANGE android:name -->
+            <meta-data android:name="main.class" 
+                                   android:value="org.venity.jphp.ext.android.UXAndroidApplication"/>
+                                   <!-- DONT CHANGE android:value -->
+			<meta-data android:name="debug.port" 
+                                   android:value="0"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.gluonhq.impl.charm.down.plugins.android.NotificationActivity"
+                  android:parentActivityName="javafxports.android.FXActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value="javafxports.android.FXActivity"/>
+        </activity>
+        <receiver android:name="com.gluonhq.impl.charm.down.plugins.android.AlarmReceiver" />
+    </application>
+</manifest>

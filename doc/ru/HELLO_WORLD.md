@@ -10,10 +10,7 @@
 Для генерации `Hello, World!` приложения нужно использовать следующие команды:
 
 ```bash
-jppm init # Соглашаемся на добовление App плагина
-jppm remove jphp-core && jppm remove jphp-zend-ext
-jppm add jppm-android-plugin --dev # Добовляем jppm плагин
-jppm android:init # Инициализируем Android проект
+jppm init jphp-android-javafx # Вводим всю информацию и инициализируем шаблон
 ```
 
 После чего у нас сгенерируются файлы Android приложения.
@@ -33,7 +30,7 @@ UXMobileApplication::launch(function () {
 });
 ```
 
-Компилируем с помощью команды `jppm android:compile` или запускаем с помощью команды `jppm android:run`, и видим наш Hello, World!
+Компилируем с помощью команды `jppm build` или запускаем с помощью команды `jppm start`, и видим наш Hello, World!
 
 ## Native Hello, World!
 

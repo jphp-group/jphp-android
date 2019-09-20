@@ -1,0 +1,35 @@
+<?php
+
+namespace app;
+
+use php\android\UXAppBar;
+use php\android\UXMaterialIcons;
+use php\android\UXView;
+use php\gui\UXLabel;
+use php\gui\UXButton;
+
+class HomeView extends UXView {
+    public function __construct() {
+        parent::__construct();
+
+        $this->setOnUpdateAppBar([$this, "onUpdateAppBar"]);
+
+        $button = new UXButton("Hello, World!");
+        $button->graphic = UXMaterialIcons::of("LANGUAGE")->graphic();
+        $button->on("click", function () use ($button) {
+            $button->text = "Change the world!";
+        });
+
+        $this->center = $button;
+    }
+
+    /**
+     * @param UXAppBar $bar
+     */
+    public function onUpdateAppBar(UXAppBar $bar) {
+        $bar->title = new UXLabel("{{name}}");
+	$bar->navIcon = UXMaterialIcons::of("MENU")->button(function () {
+            // on navigation icon click ....
+        });
+    }
+}

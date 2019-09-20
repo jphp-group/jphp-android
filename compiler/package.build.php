@@ -5,11 +5,11 @@ use packager\cli\Console;
 use php\lib\fs;
 
 /**
- * @jppm-task module:build
- * @jppm-description Build jphp-compiler module
+ * @jppm-task publish
+ * @jppm-description Build jphp-compiler
  */
 function task_compiler_build(Event $e) {
     Tasks::run("build", [], null);
-    fs::makeDir("../jppm-plugin/src/jpfa/");
-    fs::move("./build/jphp-compiler.jar", "../jppm-plugin/src/jpfa/jphp-compiler.jar");
+    fs::makeDir("../plugins/jppm/src/jpfa/");
+    fs::move("./build/jphp-compiler.jar", "../plugins/jppm/src/jpfa/jphp-compiler.jar");
 }

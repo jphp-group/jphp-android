@@ -9,7 +9,7 @@ use php\lib\fs;
 
 /**
  * @jppm-depends-on gradle:build
- * @jppm-task module:build
+ * @jppm-task publish
  * @jppm-description Build ui-javafx module
  */
 function task_ui_javafx_build(Event $e) {

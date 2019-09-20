@@ -20,37 +20,12 @@ use compress\ZipArchiveEntry;
  *
  * @jppm-task init as android:init
  * @jppm-task compile as android:compile
- * @jppm-task compile_install as android:compile:adb
+ * @jppm-task adb as android:compile:adb
  * @jppm-task run as android:run
  *
  * @jppm-task compile as build
  */
 class AndroidPlugin {
-
-    // paths
-    public const JPHP_COMPILER_PATH = "./.jpfa/compiler.jar";
-    public const JPHP_COMPILER_RESOURCE = "res://jpfa/jphp-compiler.jar";
-    public const JPHP_BUILD_TEMPLATE_JAVAFX = "res://gradle-build-scripts/javafx.template.groovy";
-    public const JPHP_BUILD_TEMPLATE_NATIVE = "res://gradle-build-scripts/native.template.groovy";
-    public const GRADLE_WRAPPER_DIR = "./gradle/wrapper";
-    public const GRADLE_WRAPPER_JAR_FILE = "./gradle/wrapper/gradle-wrapper.jar";
-    public const GRADLE_WRAPPER_JAR_RESOURCE = "res://gradle/wrapper/gradle-wrapper.jar";
-    public const GRADLE_WRAPPER_PROP_FILE = "./gradle/wrapper/gradle-wrapper.properties";
-    public const GRADLE_WRAPPER_PROP_RESOURCE = "res://gradle/wrapper/gradle-wrapper.properties";
-    public const GRADLEW_UNIX_FILE = "./gradlew";
-    public const GRADLEW_UNIX_RESOURCE = "res://gradle/gradlew";
-    public const GRADLEW_WIN_FILE = "./gradlew.bat";
-    public const GRADLEW_WIN_RESOURCE = "res://gradle/gradlew.bat";
-    public const ANDROID_JAVAFX_RESOURCES = "res://javafx-android-res.zip";
-    public const ANDROID_NATIVE_RESOURCES = "res://native-android-res.zip";
-
-    // messages
-    public const ANDROID_SDK_READ = "Android SDK Version";
-    public const ANDROID_SDK_TOOLS_READ = "Android SDK Tools Version";
-    public const ANDROID_UI_READ = "Select android UI [javafx, native]";
-    public const PROJECT_NAME_READ = "Android application name";
-    public const PROJECT_ID_READ = "Android application ID";
-
     public const JPHP_COMPILER_MAIN_CLASS = "org.venity.compiler.Main";
 
     /**
@@ -61,84 +36,9 @@ class AndroidPlugin {
      * @throws \php\format\ProcessorException
      */
     public function init(Event $event) {
-        $this->check_environment();
-        $this->gradle_init();
-        $this->prepare_compiler();
-
-        // build config
-        $config = [
-            "sdk" => $_ENV["JPHP_ANDROID_SDK"] ?: Console::read(AndroidPlugin::ANDROID_SDK_READ, 28),
-            "sdk-tools" => $_ENV["JPHP_ANDROID_SDK_TOOLS"] ?:
-                Console::read(AndroidPlugin::ANDROID_SDK_TOOLS_READ, "29.0.0"),
-            "id" => $_ENV["JPHP_ANDROID_APPLICATION_ID"] ?:
-                Console::read(AndroidPlugin::PROJECT_ID_READ, "org.develnext.jphp.android"),
-            "ui" => $_ENV["JPHP_ANDROID_UI"] ?:
-                Console::read(AndroidPlugin::ANDROID_UI_READ, "javafx")
-        ];
-
-        // save config to package.php.yml
-        $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
-        $yaml["android"] = $config;
-        fs::formatAs("./" . Package::FILENAME, $yaml, "yaml", YamlProcessor::SERIALIZE_PRETTY_FLOW);
-
-        if ($config["ui"] == "javafx") {
-            Tasks::run("add", [ "jphp-android-javafx-ui-ext" ], null);
-        } elseif ($config["ui"] == "native") {
-            Tasks::run("add", [ "jphp-android-native-ui-ext" ], null);
-        } else {
-            Console::error("Unsupported UI type " . $config["ui"] . ", supported UIs: [javafx, native]");
-            exit(102);
-        }
-
-        $config["name"] = $event->package()->getName();
-        $config["version-name"] = $event->package()->getVersion('last');
-        $config["version-code"] = intval($event->package()->getVersion('1'));
-
-        if ($config["ui"] == "javafx") {
-            $zip = new ZipArchive(Stream::of(AndroidPlugin::ANDROID_JAVAFX_RESOURCES));
-            $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($config) {
-                if (!$entry->isDirectory()) {
-                    $filePath = fs::abs('./android/' . $entry->name);
-                    fs::makeFile($filePath);
-                    fs::copy($stream, $filePath);
-                    if (fs::ext($filePath) != "xml") return;
-
-                    foreach ($config as $key => $val)
-                        Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
-                } else fs::makeDir(fs::abs('./android/' . $entry->name));
-            });
-        } elseif ($config["ui"] == "native") {
-            // save config to package.php.yml
-            $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
-            $yaml["sources"] = [
-                "src-php"
-            ];
-            fs::formatAs("./" . Package::FILENAME, $yaml, "yaml", YamlProcessor::SERIALIZE_PRETTY_FLOW);
-
-            Tasks::cleanDir("./src/");
-            // dirs
-            fs::makeDir("./src-php/");
-
-            fs::makeDir("./src/");
-            fs::makeDir("./src/main/");
-            fs::makeDir("./src/main/res");
-
-            $zip = new ZipArchive(Stream::of(AndroidPlugin::ANDROID_NATIVE_RESOURCES));
-            $zip->readAll(function (ZipArchiveEntry $entry, ?Stream $stream) use ($config) {
-                if (!$entry->isDirectory()) {
-                    $filePath = fs::abs('./src/main/' . $entry->name);
-                    fs::makeFile($filePath);
-                    fs::copy($stream, $filePath);
-                    if (fs::ext($filePath) != "xml") return;
-
-                    foreach ($config as $key => $val)
-                        Stream::putContents($filePath, str::replace(Stream::getContents($filePath), "%{$key}%", $val));
-                } else fs::makeDir(fs::abs('./src/main/' . $entry->name));
-            });
-        } else {
-            Console::error("Unsupported UI type");
-            exit(-1);
-        }
+        Console::log("Deprecated!");
+        Console::log(" -> to init javafx project use `jppm init jphp-android-javafx` command");
+        Console::log(" -> to init native project use `jppm init jphp-android-native` command");
     }
 
     /**

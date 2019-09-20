@@ -1,0 +1,24 @@
+name: '{{name}}'
+version: '{{version}}'
+description: '{{description}}'
+plugins:
+  - App
+
+sources:
+  - src
+
+includes:
+  - index.php
+
+deps:
+  jphp-android-javafx-ui-ext: '*'
+
+devDeps:
+  jppm-android-plugin: '*'
+
+
+android:
+  sdk: '28'
+  sdk-tools: 29.0.0
+  id: {{android-id}}
+  ui: javafx
