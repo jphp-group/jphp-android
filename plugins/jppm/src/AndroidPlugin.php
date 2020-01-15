@@ -26,6 +26,23 @@ use compress\ZipArchiveEntry;
  * @jppm-task compile as build
  */
 class AndroidPlugin {
+     // paths
+    public const JPHP_COMPILER_PATH = "./.jpfa/compiler.jar";
+    public const JPHP_COMPILER_RESOURCE = "res://jpfa/jphp-compiler.jar";
+    public const JPHP_BUILD_TEMPLATE_JAVAFX = "res://gradle-build-scripts/javafx.template.groovy";
+    public const JPHP_BUILD_TEMPLATE_NATIVE = "res://gradle-build-scripts/native.template.groovy";
+    public const GRADLE_WRAPPER_DIR = "./gradle/wrapper";
+    public const GRADLE_WRAPPER_JAR_FILE = "./gradle/wrapper/gradle-wrapper.jar";
+    public const GRADLE_WRAPPER_JAR_RESOURCE = "res://gradle/wrapper/gradle-wrapper.jar";
+    public const GRADLE_WRAPPER_PROP_FILE = "./gradle/wrapper/gradle-wrapper.properties";
+    public const GRADLE_WRAPPER_PROP_RESOURCE = "res://gradle/wrapper/gradle-wrapper.properties";
+    public const GRADLEW_UNIX_FILE = "./gradlew";
+    public const GRADLEW_UNIX_RESOURCE = "res://gradle/gradlew";
+    public const GRADLEW_WIN_FILE = "./gradlew.bat";
+    public const GRADLEW_WIN_RESOURCE = "res://gradle/gradlew.bat";
+    public const ANDROID_JAVAFX_RESOURCES = "res://javafx-android-res.zip";
+    public const ANDROID_NATIVE_RESOURCES = "res://native-android-res.zip";
+    
     public const JPHP_COMPILER_MAIN_CLASS = "org.venity.compiler.Main";
 
     /**
