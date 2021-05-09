@@ -44,7 +44,7 @@ public class StandaloneAndroidLoader {
         scope = new CompileScope();
         env = new ConcurrentEnvironment(scope, System.out);
         env.getDefaultBuffer().setImplicitFlush(true);
-        scope.debugMode = true;
+        scope.setDebugMode(true);
 
         scope.addClassEntityFetchHandler(new EntityFetchHandler() {
             @Override
@@ -210,7 +210,7 @@ public class StandaloneAndroidLoader {
         run("index.php");
     }
 
-    public void run(String bootstrapScriptName) {
+    protected void run(String bootstrapScriptName) {
         loadExtensions();
 
         try {
