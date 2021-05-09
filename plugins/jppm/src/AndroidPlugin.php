@@ -26,11 +26,12 @@ use compress\ZipArchiveEntry;
  * @jppm-task compile as build
  */
 class AndroidPlugin {
-     // paths
-    public const JPHP_COMPILER_PATH = "./vendor/jppm-android-plugin/src/jpfa/jphp-compiler.jar";
-    public const JPHP_COMPILER_RESOURCE = "res://jpfa/jphp-compiler.jar";
+    // paths
+    public const JPHP_COMPILER_LIBS = "./vendor/jppm-android-plugin/src/jpfa/";
     public const JPHP_BUILD_TEMPLATE_JAVAFX = "res://gradle-build-scripts/javafx.template.groovy";
     public const JPHP_BUILD_TEMPLATE_NATIVE = "res://gradle-build-scripts/native.template.groovy";
+    public const JPHP_COMPILER_MAIN_CLASS = "org.venity.compiler.Main";
+
     public const GRADLE_WRAPPER_DIR = "./gradle/wrapper";
     public const GRADLE_WRAPPER_JAR_FILE = "./gradle/wrapper/gradle-wrapper.jar";
     public const GRADLE_WRAPPER_JAR_RESOURCE = "res://gradle/wrapper/gradle-wrapper.jar";
@@ -40,10 +41,6 @@ class AndroidPlugin {
     public const GRADLEW_UNIX_RESOURCE = "res://gradle/gradlew";
     public const GRADLEW_WIN_FILE = "./gradlew.bat";
     public const GRADLEW_WIN_RESOURCE = "res://gradle/gradlew.bat";
-    public const ANDROID_JAVAFX_RESOURCES = "res://javafx-android-res.zip";
-    public const ANDROID_NATIVE_RESOURCES = "res://native-android-res.zip";
-    
-    public const JPHP_COMPILER_MAIN_CLASS = "org.venity.compiler.Main";
 
     /**
      * Init android project
@@ -94,8 +91,14 @@ class AndroidPlugin {
             $classPath[$key] = fs::normalize(fs::abs("./vendor/") . $path);
 
         $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
+        $libs = fs::scan(fs::abs(AndroidPlugin::JPHP_COMPILER_LIBS), function (File $file) {
+            return fs::abs($file);
+        });
 
-        $classPath[] = fs::abs(AndroidPlugin::JPHP_COMPILER_PATH);
+        foreach ($libs as $lib) {
+            $classPath[] = $lib;
+        }
+
         $classPath[] = fs::abs($_ENV["ANDROID_HOME"] . "/platforms/android-" . $yaml["android"]["sdk"] . "/android.jar");
         $classPath = str::join($classPath, File::PATH_SEPARATOR);
 
