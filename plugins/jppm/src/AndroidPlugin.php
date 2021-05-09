@@ -27,7 +27,7 @@ use compress\ZipArchiveEntry;
  */
 class AndroidPlugin {
      // paths
-    public const JPHP_COMPILER_PATH = "./.jpfa/compiler.jar";
+    public const JPHP_COMPILER_PATH = "./vendor/jppm-android-plugin/src/jpfa/jphp-compiler.jar";
     public const JPHP_COMPILER_RESOURCE = "res://jpfa/jphp-compiler.jar";
     public const JPHP_BUILD_TEMPLATE_JAVAFX = "res://gradle-build-scripts/javafx.template.groovy";
     public const JPHP_BUILD_TEMPLATE_NATIVE = "res://gradle-build-scripts/native.template.groovy";
@@ -70,7 +70,6 @@ class AndroidPlugin {
     public function exec_gradle_task(Event $event, string $task) {
         $this->check_environment();
         $this->gradle_init();
-        $this->prepare_compiler();
         $this->generate_gradle_build($event);
 
         Tasks::run("app:build", [], null);
@@ -94,11 +93,11 @@ class AndroidPlugin {
         foreach ($classPath as $key => $path)
             $classPath[$key] = fs::normalize(fs::abs("./vendor/") . $path);
 
-        $classPath = str::join($classPath, File::PATH_SEPARATOR) . File::PATH_SEPARATOR . AndroidPlugin::JPHP_COMPILER_PATH;
-
         $yaml = fs::parseAs("./" . Package::FILENAME, "yaml");
 
-        $classPath .= File::PATH_SEPARATOR . $_ENV["ANDROID_HOME"] . "/platforms/android-" . $yaml["android"]["sdk"] . "/android.jar";
+        $classPath[] = fs::abs(AndroidPlugin::JPHP_COMPILER_PATH);
+        $classPath[] = fs::abs($_ENV["ANDROID_HOME"] . "/platforms/android-" . $yaml["android"]["sdk"] . "/android.jar");
+        $classPath = str::join($classPath, File::PATH_SEPARATOR);
 
         $process = new Process([
             'java', '-cp', $classPath,
@@ -187,16 +186,6 @@ class AndroidPlugin {
         }
 
         exit(0);
-    }
-
-    protected function prepare_compiler() {
-        if (!fs::exists(AndroidPlugin::JPHP_COMPILER_PATH)) {
-            Console::log("-> prepare jPHP compiler ...");
-
-            fs::makeDir("./.jpfa/");
-            Tasks::createFile(AndroidPlugin::JPHP_COMPILER_PATH,
-                fs::get(AndroidPlugin::JPHP_COMPILER_RESOURCE));
-        }
     }
 
     protected function check_environment() {
